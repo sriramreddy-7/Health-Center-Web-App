@@ -3,7 +3,7 @@
 <html>
   <head>
     <title>CCHC Login</title>
-     <link href="{% static 'icons/hb.png' %}" rel="icon">
+     <link href="{% static 'assets/icons/hb.png' %}" rel="icon">
     <link
       href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap"
       rel="stylesheet"
@@ -237,10 +237,10 @@
     }
   </style>
   <body>
-    <img class="wave" src="{% static 'icons/login/wave.png' %}" />
+    <img class="wave" src="{% static 'assets/icons/login/wave.png' %}" />
     <div class="container">
       <div class="img">
-        <img src="{% static 'icons/login/bg.svg' %}" />
+        <img src="{% static 'assets/icons/login/bg.svg' %}" />
       </div>
       <div class="login-content">
            {% if message %}
@@ -250,7 +250,7 @@
     {% endif %}
         <form action="{% url 'consultant_doctor_login' %}" method="post">
           {% csrf_token %}
-          <img src="{% static 'icons/login/avatar.svg' %}" />
+          <img src="{% static 'assets/icons/login/avatar.svg' %}" />
           <h1 class="titl">Welcome {{msg}}</h1>
           <br />
           <div class="input-div one">
