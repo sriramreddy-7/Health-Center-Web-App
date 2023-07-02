@@ -73,10 +73,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-
-
-
+    
     # 'cchc.receptionist.middleware.SessionExpiredMiddleware',
     # 'cchc.junior_doctor.middleware.SessionExpiredMiddleware',
     # 'cchc.lab_incharge.middleware.SessionExpiredMiddleware',
@@ -85,6 +82,11 @@ MIDDLEWARE = [
     # 'cchc.home.middleware.SessionExpiredMiddleware',
     # 'cchc.patient.middleware.SessionExpiredMiddleware',
 ]
+
+CSRF_TRUSTED_ORIGINS = [
+    'cchc-railway-production.up.railway.app',
+]
+
 
 ROOT_URLCONF = 'cchc.urls'
 
