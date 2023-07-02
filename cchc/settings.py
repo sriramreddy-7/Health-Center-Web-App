@@ -65,6 +65,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+      "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.cache.UpdateCacheMiddleware',
@@ -217,7 +218,7 @@ LOGOUT_REDIRECT_URL = '/login/'
 SESSION_EXPIRE_SECONDS = 1800  # 30 minutes
 SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
 
-
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
 
