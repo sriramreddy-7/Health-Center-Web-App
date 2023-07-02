@@ -1,1 +1,1 @@
-web: gunicorn cchc.wsgi --log-file--
+web: gunicorn cchc.wsgi --log-file -
