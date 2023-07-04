@@ -121,16 +121,27 @@ WSGI_APPLICATION = 'cchc.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'mgl2ABRqJt8TA9UHYfkv',
-        'HOST': 'containers-us-west-159.railway.app',
-        'PORT': '7757',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'railway',
+#         'USER': 'postgres',
+#         'PASSWORD': 'mgl2ABRqJt8TA9UHYfkv',
+#         'HOST': 'containers-us-west-159.railway.app',
+#         'PORT': '7757',
+#     }
+# }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'cchc_database',
+#         'USER': 'sriramk',
+#         'PASSWORD': 'BeOXbVAr0SsvG7IUsX1yp1gEt2w2KZIS',
+#         'HOST': 'dpg-cihvjkd9aq012eok59b0-a',
+#         'PORT': '5432',
+#     }
+# }
 
 
 # DATABASES = {
@@ -145,13 +156,14 @@ DATABASES = {
 #     }
 # }
 
+import dj_database_url
 
-# DATABASES = {
-#     'default': dj_database_url.parse('postgresql://postgres:mgl2ABRqJt8TA9UHYfkv@containers-us-west-159.railway.app:7757/railway')
-# }
+DATABASES = {
+    'default': dj_database_url.parse('postgresql://postgres:ojwDgfMJHBkMm8y4QZba@containers-us-west-12.railway.app:6164/railway')
+}
 
 
-# import dj_database_url
+
 
 
 # DATABASE_URL = os.environ.get('DATABASE_URL')
@@ -208,6 +220,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # default static files settings for PythonAnywhere.
 # see https://help.pythonanywhere.com/pages/DjangoStaticFiles for more info
 MEDIA_ROOT = '/home/cchc/cchc/media'
+    
 MEDIA_URL = '/media/'
 
 LOGIN_REDIRECT_URL = '/login/'
