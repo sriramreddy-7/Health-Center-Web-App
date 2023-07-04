@@ -111,16 +111,15 @@
                         <th>Gender</th>
                         <th>DOB</th>
                         <th>Age</th>
-
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <th scope="row"> {{flag}}</th>
+                        <th scope="row">{{flag}}</th>
                         <td>
                           <div>
                             <h5 class="text-truncate font-size-14 mb-1">
-                             {{patient.patient_name}}
+                              {{patient.patient_name}}
                             </h5>
                           </div>
                         </td>
@@ -154,8 +153,16 @@
                       class="btn btn-success me-1"
                       ><i class="fa fa-print"></i
                     ></a>
-
-                    <a href="/receptionist/appointment/{{patient.patient_id}}/" class="btn btn-primary w-md">Book Appointment</a>
+                    <a
+                      href="/receptionist/appointment/{{patient.patient_id}}/"
+                      class="btn btn-primary w-md"
+                      >Book Appointment</a
+                    >
+                    <a
+                      href="{% url 'receptionist:receptionist_dashboard' %}"
+                      class="btn btn-primary w-md"
+                      >Dashboard</a
+                    >
                   </div>
                 </div>
               </div>
