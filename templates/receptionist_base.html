@@ -4,33 +4,69 @@
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
     <title>CCHC Receptionist Dashboard</title>
-    <link href="{% static 'assets/icons/hb.png' %}" rel="icon">
-    <link rel="stylesheet"      href="{% static 'assets/rp/vendors/mdi/css/materialdesignicons.min.css' %}" />
-    <link rel="stylesheet"      href="{% static 'assets/rp/vendors/flag-icon-css/css/flag-icon.min.css' %}" />
-    <link rel="stylesheet"      href="{% static 'assets/rp/vendors/css/vendor.bundle.base.css' %}" />
-    <link rel="stylesheet"      href="{% static 'assets/rp/vendors/jquery-bar-rating/css-stars.css' %}" />
-    <link rel="stylesheet"      href="{% static 'assets/rp/vendors/font-awesome/css/font-awesome.min.css' %}" />
-    <link rel="stylesheet"      href="{% static 'assets/rp/css/demo_2/style.css' %}" />
-
+    <link href="{% static 'assets/icons/hb.png' %}" rel="icon" />
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/rp/vendors/mdi/css/materialdesignicons.min.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/rp/vendors/flag-icon-css/css/flag-icon.min.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/rp/vendors/css/vendor.bundle.base.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/rp/vendors/jquery-bar-rating/css-stars.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/rp/vendors/font-awesome/css/font-awesome.min.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/rp/css/demo_2/style.css' %}"
+    />
+    <link href="{% static 'assets/rp/vendors/select2/select2.min.css' %}" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
   </head>
   <body>
-   <div class="container-scroller">
+    <div class="container-scroller">
       <!-- partial:partials/_horizontal-navbar.html -->
       <div class="horizontal-menu">
         <nav class="navbar top-navbar col-lg-12 col-12 p-0">
           <div class="container">
-            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-              <a class="navbar-brand brand-logo" href="{% url 'receptionist:receptionist_dashboard' %}">
-                <img src="{% static 'assets/rp/images/logo.svg' %}" alt="logo" />
-                <span class="font-12 d-block font-weight-light">Receptionist Dashboard </span>
+            <div
+              class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center"
+            >
+              <a
+                class="navbar-brand brand-logo"
+                href="{% url 'receptionist:receptionist_dashboard' %}"
+              >
+                <img
+                  src="{% static 'assets/rp/images/logo.svg' %}"
+                  alt="logo"
+                />
+                <span class="font-12 d-block font-weight-light"
+                  >Receptionist Dashboard
+                </span>
               </a>
-              <a class="navbar-brand brand-logo-mini" href="#"><img src="{% static 'assets/rp/images/logo-mini.svg' %}" alt="logo" /></a>
+              <a class="navbar-brand brand-logo-mini" href="#"
+                ><img
+                  src="{% static 'assets/rp/images/logo-mini.svg' %}"
+                  alt="logo"
+              /></a>
             </div>
-            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+            <div
+              class="navbar-menu-wrapper d-flex align-items-center justify-content-end"
+            >
               <!--<ul class="navbar-nav mr-lg-2">-->
               <!--  <li class="nav-item nav-search d-none d-lg-block">-->
               <!--    <div class="input-group">-->
@@ -45,25 +81,45 @@
               <!--</ul>-->
               <ul class="navbar-nav navbar-nav-right">
                 <li class="nav-item nav-profile dropdown">
-                  <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                  <a
+                    class="nav-link"
+                    id="profileDropdown"
+                    href="#"
+                    data-toggle="dropdown"
+                    aria-expanded="false"
+                  >
                     <div class="nav-profile-img">
-                      <img src="#" alt="image">
+                      <img src="#" alt="image" />
                     </div>
                     <div class="nav-profile-text">
-                      <p class="text-black font-weight-semibold m-0">{{ user.username }} !</p>
-                      <span class="font-13 online-color">online <i class="mdi mdi-chevron-down"></i></span>
+                      <p class="text-black font-weight-semibold m-0">
+                        {{ user.username }} !
+                      </p>
+                      <span class="font-13 online-color"
+                        >online <i class="mdi mdi-chevron-down"></i
+                      ></span>
                     </div>
                   </a>
-                  <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                  <div
+                    class="dropdown-menu navbar-dropdown"
+                    aria-labelledby="profileDropdown"
+                  >
                     <a class="dropdown-item" href="#">
-                      <i class="mdi mdi-cached mr-2 text-success"></i> Activity Log </a>
+                      <i class="mdi mdi-cached mr-2 text-success"></i> Activity
+                      Log
+                    </a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">
-                      <i class="mdi mdi-logout mr-2 text-primary"></i> Signout </a>
+                      <i class="mdi mdi-logout mr-2 text-primary"></i> Signout
+                    </a>
                   </div>
                 </li>
               </ul>
-              <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="horizontal-menu-toggle">
+              <button
+                class="navbar-toggler navbar-toggler-right d-lg-none align-self-center"
+                type="button"
+                data-toggle="horizontal-menu-toggle"
+              >
                 <span class="mdi mdi-menu"></span>
               </button>
             </div>
@@ -73,7 +129,10 @@
           <div class="container">
             <ul class="nav page-navigation">
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'receptionist:receptionist_dashboard' %}">
+                <a
+                  class="nav-link"
+                  href="{% url 'receptionist:receptionist_dashboard' %}"
+                >
                   <i class="mdi mdi-compass-outline menu-icon"></i>
                   <span class="menu-title">Dashboard</span>
                 </a>
@@ -82,11 +141,16 @@
                 <a href="#" class="nav-link">
                   <i class="mdi mdi-stethoscope menu-icon"></i>
                   <span class="menu-title">Doctor</span>
-                  <i class="menu-arrow"></i></a>
+                  <i class="menu-arrow"></i
+                ></a>
                 <div class="submenu">
                   <ul class="submenu-item">
-                    <li class="nav-item"><a class="nav-link" href="#">Add Doctor</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Doctor List</a></li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Add Doctor</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Doctor List</a>
+                    </li>
                   </ul>
                 </div>
               </li>
@@ -94,12 +158,38 @@
                 <a href="#" class="nav-link">
                   <i class="mdi mdi-monitor-dashboard menu-icon"></i>
                   <span class="menu-title">Appointment</span>
-                  <i class="menu-arrow"></i></a>
+                  <i class="menu-arrow"></i
+                ></a>
                 <div class="submenu">
                   <ul class="submenu-item">
-                    <li class="nav-item"><a class="nav-link" href="{% url 'receptionist:newPatient_registration' %}">New Patient</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'receptionist:oldPatient_registration' %}">Old Patinet</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'receptionist:receptionist_appointmentList'%}">Appointment List</a></li>
+                    <li class="nav-item">
+                      <a
+                        class="nav-link"
+                        href="{% url 'receptionist:newPatient_registration' %}"
+                        >New Patient</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a
+                        class="nav-link"
+                        href="{% url 'receptionist:oldPatient_registration' %}"
+                        >Old Patinet</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a
+                        class="nav-link"
+                        href="{% url 'receptionist:receptionist_appointmentList'%}"
+                        >Appointment List</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a
+                        class="nav-link"
+                        href="{% url 'receptionist:receptionist_bookAppointment' %}"
+                        >Booking Appointment</a
+                      >
+                    </li>
                   </ul>
                 </div>
               </li>
@@ -107,16 +197,40 @@
                 <a href="#" class="nav-link">
                   <i class="mdi mdi-clipboard-text menu-icon"></i>
                   <span class="menu-title">Patient Management</span>
-                  <i class="menu-arrow"></i></a>
+                  <i class="menu-arrow"></i
+                ></a>
                 <div class="submenu">
                   <ul class="submenu-item">
-                    <li class="nav-item"><a class="nav-link" href="{% url 'receptionist:receptionist_patientList' %}">All Patients</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'receptionist:newPatient_registration' %}">New Patient Registration</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'receptionist:receptionist_patientSearch' %}">Patient Search</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Prescriptions</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Lab Reports</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Billing and Payments</a></li>
-
+                    <li class="nav-item">
+                      <a
+                        class="nav-link"
+                        href="{% url 'receptionist:receptionist_patientList' %}"
+                        >All Patients</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a
+                        class="nav-link"
+                        href="{% url 'receptionist:newPatient_registration' %}"
+                        >New Patient Registration</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a
+                        class="nav-link"
+                        href="{% url 'receptionist:receptionist_patientSearch' %}"
+                        >Patient Search</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Prescriptions</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Lab Reports</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Billing and Payments</a>
+                    </li>
                   </ul>
                 </div>
               </li>
@@ -127,7 +241,10 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'receptionist:receptionist_patientList' %}">
+                <a
+                  class="nav-link"
+                  href="{% url 'receptionist:receptionist_patientList' %}"
+                >
                   <i class="mdi mdi-content-copy menu-icon"></i>
                   <span class="menu-title">IP List</span>
                 </a>
@@ -136,12 +253,19 @@
                 <a href="#" class="nav-link">
                   <i class="mdi mdi-webpack menu-icon"></i>
                   <span class="menu-title">Report</span>
-                  <i class="menu-arrow"></i></a>
+                  <i class="menu-arrow"></i
+                ></a>
                 <div class="submenu">
                   <ul class="submenu-item">
-                    <li class="nav-item"><a class="nav-link" href="#">Patient wise Report</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Doctor wise Report</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Total Report</a></li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Patient wise Report</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Doctor wise Report</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Total Report</a>
+                    </li>
                   </ul>
                 </div>
               </li>
@@ -149,18 +273,29 @@
                 <a href="#" class="nav-link">
                   <i class="mdi mdi-webpack menu-icon"></i>
                   <span class="menu-title">Settings</span>
-                  <i class="menu-arrow"></i></a>
+                  <i class="menu-arrow"></i
+                ></a>
                 <div class="submenu">
                   <ul class="submenu-item">
-                    <li class="nav-item"><a class="nav-link" href="#">Account Settings</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Change Password</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'receptionist:logout_view' %}">Sign Out</a></li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Account Settings</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Change Password</a>
+                    </li>
+                    <li class="nav-item">
+                      <a
+                        class="nav-link"
+                        href="{% url 'receptionist:logout_view' %}"
+                        >Sign Out</a
+                      >
+                    </li>
                   </ul>
                 </div>
               </li>
               <!--<li class="nav-item">-->
               <!--  <div class=" nav-link d-flex">-->
-                  <!--<button class="btn btn-sm bg-danger text-white">Online Booking</button>-->
+              <!--<button class="btn btn-sm bg-danger text-white">Online Booking</button>-->
               <!--    <div class="nav-item dropdown">-->
               <!--      <a class="nav-link count-indicator dropdown-toggle text-white font-weight-semibold" id="notificationDropdown" href="#" data-toggle="dropdown"> Settings </a>-->
               <!--      <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">-->
@@ -188,12 +323,9 @@
       <div class="container-fluid page-body-wrapper">
         <div class="main-panel">
           <div class="content-wrapper pb-0">
-              {% block body %}
-              {% endblock %}
-
+            {% block body %} {% endblock %}
           </div>
           <!-- content-wrapper ends -->
-
         </div>
         <!-- main-panel ends -->
       </div>
@@ -239,5 +371,8 @@
     <script src="{% static 'assets/rp/js/chart.js' %}"></script>
     <script src="{% static 'assets/rp/js/dashboard.js' %}"></script>
     <script src="{% static 'assets/rp/vendors/datatables.net-bs4/dataTables.bootstrap4.js' %}"></script>
+    <script src="{% static 'assets/rp/vendors/js/vendor.bundle.base.js' %}"></script>
+    <script src="{% static 'assets/rp/vendors/select2/select2.min.js' %}"></script>
+    <script src="{% static 'assets/rp/vendors/typeahead.js/typeahead.bundle.min.js' %}"></script>
   </body>
 </html>

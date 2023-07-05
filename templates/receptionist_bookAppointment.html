@@ -1,0 +1,259 @@
+{% extends 'receptionist_base.html' %} {% load static %} {% block body %}
+<link href="{% static 'assets/rp/vendors/select2/select2.min.css' %}" />
+<div class="col-12 grid-margin">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">CCHC_Appointment Booking Form</h4>
+      <form class="form-sample">
+        <p class="card-description">Invoice Details</p>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Patient Id</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control form-control-lg" />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Visiting Date</label>
+              <div class="col-sm-9">
+                <input
+                  class="form-control form-control-lg"
+                  id="date-input"
+                  type="date"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Visiting Date</label>
+              <div class="col-sm-9">
+                <input
+                  class="form-control form-control-lg"
+                  id="date-input"
+                  type="date"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-lg-3 col-form-label">Full Name</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control form-control-lg"
+                  value="{{patient.patient_name}}"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Gender</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control form-control-lg"
+                  value="{{patient.patient_gender}}"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Date of Birth</label>
+              <div class="col-sm-9">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control form-control-lg"
+                    value="{{patient.patient_dob}}"
+                    readonly
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Age</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  value="{{patient.patient_age}}"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label" for="pstate"
+                >Mobile Number</label
+              >
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  value="{{patient.mobile_number}}"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Patient Type</label>
+              <div class="col-sm-9">
+                <select
+                  class="form-control form-control-lg"
+                  id="patient-type"
+                  onchange="populateDoctors()"
+                >
+                  <option value="ODP">ODP</option>
+                  <option value="PD">PD</option>
+                  <option value="SD">SD</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Patient Type</label>
+              <div class="col-sm-9">
+                <select
+                  class="form-control form-control-lg"
+                  id="doctor-select"
+                  onchange="calculateInvoice()"
+                ></select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+          <!-- <div class="row">
+          <div class="col-md-4">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Doctor Fee (without GST):</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control form-control-lg" id="fee-without-gst" />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">GST Amount:</label>
+              <div class="col-sm-9">
+                <input
+                  class="form-control form-control-lg"
+                  id="gst-amount"
+                  type="text"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+           <div class="col-md-4">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Total Fee (including GST):</label>
+              <div class="col-sm-9">
+                <input
+                  class="form-control form-control-lg"
+                  id="total-fee"
+                  type="text"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+        </div> -->
+        
+        <label for="fee-without-gst">Doctor Fee (without GST):</label>
+        <span id="fee-without-gst"></span>
+
+        <br />
+
+        <label for="gst-amount">GST Amount:</label>
+        <span id="gst-amount"></span>
+
+        <br />
+
+        <label for="total-fee">Total Fee (including GST):</label>
+        <span id="total-fee"></span>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  function populateDoctors() {
+    var patientType = document.getElementById("patient-type").value;
+    var doctorDropdown = document.getElementById("doctor-select");
+    doctorDropdown.innerHTML = "";
+
+    if (patientType === "ODP") {
+      var doctors = [
+        { name: "Doctor A", fee: 100 },
+        { name: "Doctor B", fee: 200 },
+        { name: "Doctor C", fee: 300 },
+      ];
+    } else if (patientType === "PD") {
+      var doctors = [
+        { name: "Doctor D", fee: 150 },
+        { name: "Doctor E", fee: 250 },
+        { name: "Doctor F", fee: 350 },
+      ];
+    } else if (patientType === "SD") {
+      var doctors = [
+        { name: "Doctor G", fee: 200 },
+        { name: "Doctor H", fee: 300 },
+        { name: "Doctor I", fee: 400 },
+      ];
+    }
+
+    for (var i = 0; i < doctors.length; i++) {
+      var option = document.createElement("option");
+      option.value = doctors[i].fee; // Set fee as the option value
+      option.text = doctors[i].name;
+      doctorDropdown.add(option);
+    }
+
+    // Call calculateInvoice to update the fee display
+    calculateInvoice();
+  }
+
+  function calculateInvoice() {
+    var doctorFee = document.getElementById("doctor-select").value;
+    var gstRate = 18;
+
+    var feeWithoutGST = parseFloat(doctorFee);
+    var gstAmount = (feeWithoutGST * gstRate) / 100;
+    var totalFee = feeWithoutGST + gstAmount;
+
+    document.getElementById("fee-without-gst").innerHTML =
+      feeWithoutGST.toFixed(2);
+    document.getElementById("gst-amount").innerHTML = gstAmount.toFixed(2);
+    document.getElementById("total-fee").innerHTML = totalFee.toFixed(2);
+  }
+</script>
+<script src="{% static 'assets/rp/vendors/js/vendor.bundle.base.js' %}"></script>
+<script src="{% static 'assets/rp/vendors/select2/select2.min.js' %}"></script>
+<script src="{% static 'assets/rp/vendors/typeahead.js/typeahead.bundle.min.js' %}"></script>
+{% endblock %}

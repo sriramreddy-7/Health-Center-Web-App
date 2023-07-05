@@ -145,3 +145,7 @@ def receptionist_patientSearch(request):
     else:
         return render(request, 'receptionist_patientSearch.html')
 
+
+
+def receptionist_bookAppointment(request):
+    return render(request,'receptionist_bookAppointment.html')
