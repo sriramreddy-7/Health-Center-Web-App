@@ -95,13 +95,21 @@ def oldPatient_registration(request):
         return render(request, 'oldPatient_registration.html')
 
 
-def appointment(request,patient_id):
-    patient=PatientPrimaryData.objects.get(patient_id=patient_id)
-    pid=patient.patient_id
-    info=FT(patient_id=pid)
-    info.save()
-    flag=FT.objects.get(patient_id=patient_id)
-    return render(request,'appointment.html',{'patient':patient,'flag':flag})
+def appointment(request,ap_id):
+    # patient=PatientPrimaryData.objects.get(patient_id=patient_id)
+    # pid=patient.patient_id
+    # info=FT(patient_id=pid)
+    # info.save()
+    # flag=FT.objects.get(patient_id=patient_id)
+    # return render(request,'appointment.html',{'patient':patient,'flag':flag})
+    ap_det=Visit.objects.get(appointment_id=ap_id)
+    pid=ap_det.patient_id
+    pd_det=PatientPrimaryData.objects.get(patient_id=pid)
+    context={
+            'ap_det':ap_det,
+            'pd_det':pd_det,
+    }
+    return render(request,'appointment.html',context)
 
 def receptionist_patientList(request):
     patient=PatientPrimaryData.objects.all()
@@ -180,7 +188,19 @@ def receptionist_bookAppointment(request,patient_id):
         # }
         visit=Visit(patient_id=patient,doctor_name=doctorname,visit_date=visitingdate,patient_type=patient_type,doctor_fee=docfee,gst=gst,total_amount=total_amount,subtotal=total_amount,discount=gst)
         visit.save()
-        return HttpResponse('<h1>Appointment is Generated Sucessfully</h1>')
+        ap_id=visit.appointment_id
+        ap_det=Visit.objects.get(appointment_id=ap_id)
+        pid=visit.patient_id
+        pd_det=PatientPrimaryData.objects.get(patient_id=pid)
+        context={
+            'ap_det':ap_det,
+            'pd_det':pd_det,
+        }
+        print(ap_det)
+        # return redirect('receptionist:appointment')
+        # return HttpResponse('<h1>Appointment is Generated Sucessfully</h1>')
+        return render(request,'appointment.html',context)
+    
     else:
         patient=PatientPrimaryData.objects.get(patient_id=patient_id)
         context={
