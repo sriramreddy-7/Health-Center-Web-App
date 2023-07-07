@@ -214,3 +214,32 @@ class RP(models.Model):
 #     def increment_visit_count(self):
 #         self.visit_count += 1
 #         self.save()
+
+class Visit(models.Model):
+    patient_id = models.ForeignKey('PatientPrimaryData', on_delete=models.CASCADE)
+    patient_token = models.CharField(max_length=10, unique=True)
+    appointment_id = models.CharField(max_length=15, unique=True, primary_key=True)
+    visit_date = models.DateField()
+    doctor_name = models.CharField(max_length=100)
+    patient_type = models.CharField(max_length=100)
+    doctor_fee = models.DecimalField(max_digits=10, decimal_places=2)
+    gst = models.DecimalField(max_digits=10, decimal_places=2)
+    discount = models.DecimalField(max_digits=10, decimal_places=2)
+    subtotal = models.DecimalField(max_digits=10, decimal_places=2)
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    today_date = models.DateTimeField(default=timezone.now)
+
+    def save(self, *args, **kwargs):
+        
+        if not self.patient_token:
+            max_count = Visit.objects.filter(visit_date=self.visit_date).count() + 1
+            self.patient_token = f"{max_count:03d}"
+        
+        
+        if not self.appointment_id:
+            today = timezone.localdate()
+            count = Visit.objects.filter(visit_date=today).count() + 1
+            formatted_date = today.strftime("%d%m%y")
+            self.appointment_id = f"AP{formatted_date}{count:03d}"
+        
+        super().save(*args, **kwargs)

@@ -16,7 +16,8 @@ urlpatterns = [
     path('receptionist_appointmentList',views.receptionist_appointmentList,name="receptionist_appointmentList"),
     path('receptionist_patient_View_Edit/<str:patient_id>/',views.receptionist_patient_View_Edit,name="receptionist_patient_View_Edit"),
     path('receptionist_patientSearch',views.receptionist_patientSearch,name="receptionist_patientSearch"),
-    path('receptionist_bookAppointment',views.receptionist_bookAppointment,name="receptionist_bookAppointment"),
+    path('receptionist_bookAppointment/<str:patient_id>/',views.receptionist_bookAppointment,name="receptionist_bookAppointment"),
+    path('receptionist_patientVisit',views.receptionist_patientVisit,name="receptionist_patientVisit"),
 
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
