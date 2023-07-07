@@ -20,9 +20,8 @@ def receptionist_dashboard(request):
     try:
         patient_count = PatientPrimaryData.objects.count()
         today= timezone.now().date()
-        appointment_count = FT.objects.filter(appointment_date=today).count()
+        appointment_count = Visit.objects.filter(visit_date=today).count()
         return render(request,'receptionist_dashboard.html',{'patient_count':patient_count,'appointment_count':appointment_count})
-
     except:
         return HttpResponse("<h1> Please Login To Access this page</h1>")
 
@@ -33,6 +32,9 @@ def logout_view(request):
     response.delete_cookie('sessionid')
     return response
 
+
+def datatable(request):
+    return render(request,'datatable.html')
 
 
 def testing(request):
@@ -211,6 +213,16 @@ def receptionist_bookAppointment(request,patient_id):
     
 
 def receptionist_patientVisit(request):
-    patient=Visit.objects.all()
-    apc=Visit.objects.count()
-    return render(request,'receptionist_patientVisit.html',{'patient':patient,'apc':apc})
+    try:
+        if request.method =='GET':
+            pdate=request.GET.get('pdate')
+            # print(pdate)
+            patient=Visit.objects.filter(visit_date=pdate)
+            # print(patient)
+            apc=Visit.objects.count()
+            # print(apc)
+            return render(request,'receptionist_patientVisit.html',{'patient':patient,'apc':apc})
+        else:
+            return render(request,'receptionist_patientVisit.html')
+    except:
+        return HttpResponse('<h1 style="color:red;">error while submitting<h1>')
