@@ -11,7 +11,7 @@ from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from django.views.decorators.cache import cache_control
 from django.http import HttpResponseRedirect
-from patient.models import PatientPrimaryData,FT,PHR
+from patient.models import PatientPrimaryData,FT,PHR,Visit,JDD
 # Create your views here.
 from datetime import datetime
 
@@ -19,7 +19,7 @@ def juniorDoctor_dashboard(request):
     return render(request,'juniorDoctor_dashboard.html')
 
 def juniorDoctor_appointmentList(request):
-    patient=FT.objects.all()
+    patient=Visit.objects.all()
     return render(request,'juniorDoctor_appointmentList.html',{'patient':patient})
 
 def page_not_found(request):
@@ -32,7 +32,7 @@ def juniorDoctor_patientList(request):
 
 
 def juniorDoctor_appointmentList_FilterbyDate(request):
-    patient=FT.objects.all()
+    patient=Visit.objects.all()
     now= datetime.now()
     return render(request,'juniorDoctor_appointmentList_FilterbyDate.html',{'patient':patient,'now':now })
 
@@ -43,38 +43,116 @@ def logout_view(request):
     response.delete_cookie('sessionid')
     return response
 
-def juniorDoctor_patientDiagonise(request,patient_id):
-    pd=PatientPrimaryData.objects.get(patient_id=patient_id)
-    ad=FT.objects.get(patient_id=patient_id)
-    context={
-        'pd':pd,
-        'ad':ad
-    }
+# def juniorDoctor_patientDiagonise(request,appointment_id):
+#     if request.method == 'POST':
+#         height = request.POST['height']
+#         weight = request.POST['weight']
+#         pulse = request.POST['pulse']
+#         bp = request.POST['bp']
+#         blood_group=request.POST['blood_group']
+#         is_diabetic = 'is_diabetic' in request.POST
+#         diabetic_level = request.POST['diabetic_level'] if is_diabetic else None
+#         phi = request.POST['phi']
+#         pov = request.POST['pov']
+#         remarks = request.POST['remarks']
+#         appointment_id=request.POST['appointment_id']
+#         visit = Visit.objects.get(appointment_id=appointment_id)
+#         patient_id = PatientPrimaryData.objects.get(id=visit.patient_id_id)
+#         print(appointment_id) 
+#         print(patient_id)
+#         print(height)
+#         print(weight)
+#         print(pulse)
+#         print(bp)
+#         print(blood_group)
+#         print(is_diabetic)
+#         print(phi)
+#         print(pov)
+#         print(remarks)
+#         health_record = JDD.objects.create(
+#             appointment_id=appointment_id,
+#             patient_id = patient_id,
+#             height=height,
+#             weight=weight,
+#             pulse=pulse,
+#             bp=bp,
+#             blood_group=blood_group,
+#             is_diabetic=is_diabetic,
+#             diabetic_level=diabetic_level,
+#             phi=phi,
+#             pov=pov,
+#             remarks=remarks
+#         )
+#         health_record.save()
+#         return redirect('junior_doctor:juniorDoctor_appointmentList')
+#     ad=Visit.objects.get(appointment_id=appointment_id)
+#     pid=ad.patient_id
+#     pd=PatientPrimaryData.objects.get(patient_id=pid)
+#     context={
+#         'pd':pd,
+#         'ad':ad
+#     }
+#     return render(request,'juniorDoctor_patientDiagonise.html',context)
+
+def juniorDoctor_patientDiagonise(request,appointment_id):
     if request.method == 'POST':
+    # Retrieve data from the POST request
         height = request.POST['height']
         weight = request.POST['weight']
         pulse = request.POST['pulse']
         bp = request.POST['bp']
+        blood_group = request.POST['blood_group']
         is_diabetic = 'is_diabetic' in request.POST
         diabetic_level = request.POST['diabetic_level'] if is_diabetic else None
         phi = request.POST['phi']
         pov = request.POST['pov']
         remarks = request.POST['remarks']
-        health_record = PHR.objects.create(
-            patient=pd,
+        appointment_id = request.POST['appointment_id']
+        # Get the visit and patient objects
+        visit = Visit.objects.get(appointment_id=appointment_id)
+        patient_id = PatientPrimaryData.objects.get(id=visit.patient_id_id)
+        # Print the retrieved data for debugging purposes
+        print(appointment_id)
+        print(patient_id)
+        print(height)
+        print(weight)
+        print(pulse)
+        print(bp)
+        print(blood_group)
+        print(is_diabetic)
+        print(phi)
+        print(pov)
+        print(remarks)
+        # Create a new JDD object
+        health_record = JDD.objects.create(
+            appointment_id=visit,
+            patient_id=patient_id,
             height=height,
             weight=weight,
             pulse=pulse,
             bp=bp,
+            blood_group=blood_group,
             is_diabetic=is_diabetic,
             diabetic_level=diabetic_level,
             phi=phi,
             pov=pov,
             remarks=remarks
         )
+        # Save the JDD object
         health_record.save()
+        # Redirect to the desired page
         return redirect('junior_doctor:juniorDoctor_appointmentList')
-    return render(request,'juniorDoctor_patientDiagonise.html',context)
+
+# Code for GET request or when the form is not submitted
+    ad = Visit.objects.get(appointment_id=appointment_id)
+    pid = ad.patient_id
+    pd = PatientPrimaryData.objects.get(patient_id=pid)
+    context = {
+        'pd': pd,
+        'ad': ad    
+    }
+    return render(request, 'juniorDoctor_patientDiagonise.html', context)
+
 
 
 def juniorDoctor_patientDiagonise_View_Edit(request,patient_id):
@@ -90,3 +168,13 @@ def juniorDoctor_patientDiagonise_View_Edit(request,patient_id):
     # else:
     #     return render(request,'page_not_found.html')
     # return render(request,'juniorDoctor_patientDiagonise_View_Edit.html',context)
+
+
+def juniorDoctor_apl(request):
+    jdoctor=JDD.objects.all()
+    context={
+        'jdoctor':jdoctor,
+    }
+    for i in jdoctor:
+        print(i)
+    return render(request,'juniorDoctor_apl.html',context)

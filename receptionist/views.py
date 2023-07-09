@@ -17,13 +17,17 @@ from patient.models import PatientPrimaryData,FT,Visit
 
 @login_required
 def receptionist_dashboard(request):
-    try:
-        patient_count = PatientPrimaryData.objects.count()
-        today= timezone.now().date()
-        appointment_count = Visit.objects.filter(visit_date=today).count()
-        return render(request,'receptionist_dashboard.html',{'patient_count':patient_count,'appointment_count':appointment_count})
-    except:
-        return HttpResponse("<h1> Please Login To Access this page</h1>")
+    # try:
+    #     patient_count = PatientPrimaryData.objects.count()
+    #     today= timezone.now().date()
+    #     appointment_count = Visit.objects.filter(visit_date=today).count()
+    #     return render(request,'receptionist_dashboard.html',{'patient_count':patient_count,'appointment_count':appointment_count})
+    # except:
+    #     return HttpResponse("<h1> Please Login To Access this page</h1>")
+    patient_count = PatientPrimaryData.objects.count()
+    today= timezone.now().date()
+    appointment_count = Visit.objects.filter(visit_date=today).count()
+    return render(request,'receptionist_dashboard.html',{'patient_count':patient_count,'appointment_count':appointment_count})
 
 @cache_control(no_cache=True, must_revalidate=True)
 def logout_view(request):
