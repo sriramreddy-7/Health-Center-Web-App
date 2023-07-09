@@ -38,8 +38,6 @@ class PatientPrimaryData(models.Model):
     def __str__(self):
         return self.patient_id
 
-
-
 class PHR(models.Model):
     patient = models.ForeignKey('PatientPrimaryData', on_delete=models.CASCADE)
     date_and_time = models.DateTimeField(auto_now_add=True)
@@ -215,9 +213,40 @@ class RP(models.Model):
 #         self.visit_count += 1
 #         self.save()
 
+# class Visit(models.Model):
+#     patient_id = models.ForeignKey('PatientPrimaryData', on_delete=models.CASCADE)
+#     patient_token = models.CharField(max_length=10, unique=True)
+#     appointment_id = models.CharField(max_length=15, unique=True, primary_key=True)
+#     visit_date = models.DateField()
+#     doctor_name = models.CharField(max_length=100)
+#     patient_type = models.CharField(max_length=100)
+#     doctor_fee = models.DecimalField(max_digits=10, decimal_places=2)
+#     gst = models.DecimalField(max_digits=10, decimal_places=2)
+#     discount = models.DecimalField(max_digits=10, decimal_places=2)
+#     subtotal = models.DecimalField(max_digits=10, decimal_places=2)
+#     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
+#     today_date = models.DateTimeField(default=timezone.now)
+
+#     def save(self, *args, **kwargs):
+        
+#         if not self.patient_token:
+#             max_count = Visit.objects.filter(visit_date=self.visit_date).count() + 1
+#             self.patient_token = f"{max_count:03d}"
+        
+        
+#         if not self.appointment_id:
+#             today = timezone.localdate()
+#             count = Visit.objects.filter(visit_date=today).count() + 1
+#             formatted_date = today.strftime("%d%m%y")
+#             self.appointment_id = f"AP{formatted_date}{count:03d}"
+        
+#         super().save(*args, **kwargs)
+        
+from django.utils import timezone
+
 class Visit(models.Model):
     patient_id = models.ForeignKey('PatientPrimaryData', on_delete=models.CASCADE)
-    patient_token = models.CharField(max_length=10, unique=True)
+    patient_token = models.CharField(max_length=10)
     appointment_id = models.CharField(max_length=15, unique=True, primary_key=True)
     visit_date = models.DateField()
     doctor_name = models.CharField(max_length=100)
@@ -230,16 +259,56 @@ class Visit(models.Model):
     today_date = models.DateTimeField(default=timezone.now)
 
     def save(self, *args, **kwargs):
-        
         if not self.patient_token:
-            max_count = Visit.objects.filter(visit_date=self.visit_date).count() + 1
-            self.patient_token = f"{max_count:03d}"
-        
+            # Get the maximum patient_token for the current visit_date
+            max_token = Visit.objects.filter(visit_date=self.visit_date).aggregate(models.Max('patient_token'))['patient_token__max']
+            
+            # Check if there is an existing token for the visit_date
+            if max_token is None:
+                # Set the initial patient_token as "001" for a new visit_date
+                self.patient_token = "001"
+            else:
+                # Split the last used token into count and date
+                last_token, last_visit_date = max_token.split('-')
+                
+                # Check if the last_visit_date matches the current visit_date
+                if last_visit_date == self.visit_date.strftime("%Y%m%d"):
+                    # Get the token count from the last used token
+                    token_count = int(last_token)
+                    if token_count < 999:
+                        # Increment the token count by 1 if it's less than 999
+                        token_count += 1
+                    else:
+                        # Set the token count as 1 if it reaches 999
+                        token_count = 1
+                else:
+                    # Set the token count as 1 for a new visit_date
+                    token_count = 1
+                
+                # Format the count as a 3-digit number
+                formatted_count = f"{token_count:03d}"
+                
+                # Set the patient_token using the formatted count and visit_date
+                self.patient_token = formatted_count + "-" + self.visit_date.strftime("%Y%m%d")
         
         if not self.appointment_id:
             today = timezone.localdate()
-            count = Visit.objects.filter(visit_date=today).count() + 1
+            
+            # Check if the visit_date is different from today's date
+            if self.visit_date != today:
+                # If the visit_date is different, reset the count to 1
+                count = 1
+            else:
+                # Otherwise, get the count of visits for today's date
+                count = Visit.objects.filter(visit_date=today).count() + 1
+            
+            # Format the date as "ddmmyy"
             formatted_date = today.strftime("%d%m%y")
+            
+            # Set the appointment_id using the formatted date and count
             self.appointment_id = f"AP{formatted_date}{count:03d}"
         
         super().save(*args, **kwargs)
+    
+    class Meta:
+        unique_together = ('patient_token', 'visit_date')
