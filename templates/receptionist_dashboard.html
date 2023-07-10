@@ -198,84 +198,24 @@
           >
             <thead>
               <tr>
-                <th>Patient</th>
-                <th>Doctor</th>
-                <th>Date</th>
-                <th>Timing</th>
-                <th>Contact</th>
+                <th>Patient Token</th>
+                <th>Patient ID</th>
+                <th>Appointment ID</th>
+                <th>Patient Type</th>
+                <th>Doctor Name</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Nik Jordan</td>
-                <td>
-                  <img
-                    src="../../assets/images/dashboard/hospital/Doc_11.jpg"
-                    class="mr-2"
-                    alt="image"
-                  />
-                  Alfie Wood
-                </td>
-                <td>12 Sep 2020</td>
-                <td>10:02PM</td>
-                <td>087-288-7626</td>
+                {% for x in patient %}
+                <td>{{ x.patient_token }}</td>
+                <td>{{ x.patient_id }}</td>
+                <td>{{ x.appointment_id }}</td>
+                <td>{{ x.patient_type }}</td>
+                <td>{{ x.doctor_name }}</td>
               </tr>
-              <tr>
-                <td>Lily Wozniak</td>
-                <td>
-                  <img
-                    src="../../assets/images/dashboard/hospital/Doc_3.jpg"
-                    class="mr-2"
-                    alt="image"
-                  />
-                  Dr.Kita Chihoko
-                </td>
-                <td>14 Mar 2020</td>
-                <td>05:11PM</td>
-                <td>958-984-6484</td>
-              </tr>
-              <tr>
-                <td>Samuel Path</td>
-                <td>
-                  <img
-                    src="../../assets/images/dashboard/hospital/Doc_1.jpg"
-                    class="mr-2"
-                    alt="image"
-                  />
-                  Dr.Nwoye
-                </td>
-                <td>26 Feb 2020</td>
-                <td>08:05PM</td>
-                <td>782-097-9355</td>
-              </tr>
-              <tr>
-                <td>Mia Mai</td>
-                <td>
-                  <img
-                    src="../../assets/images/dashboard/hospital/Doc_9.jpg"
-                    class="mr-2"
-                    alt="image"
-                  />
-                  Dr.Herman Beck
-                </td>
-                <td>22 Apr 2020</td>
-                <td>08:54PM</td>
-                <td>892-335-8026</td>
-              </tr>
-              <tr>
-                <td>Herman Beck</td>
-                <td>
-                  <img
-                    src="../../assets/images/dashboard/hospital/Doc_12.jpg"
-                    class="mr-2"
-                    alt="image"
-                  />
-                  Dr.Herman Beck
-                </td>
-                <td>26 Oct 2020</td>
-                <td>08:18PM</td>
-                <td>027-758-9324</td>
-              </tr>
+              {% endfor %}
+              <tr></tr>
             </tbody>
           </table>
         </div>
