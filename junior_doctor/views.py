@@ -103,12 +103,17 @@ def juniorDoctor_patientDiagonise(request,appointment_id):
         bp = request.POST['bp']
         blood_group = request.POST['blood_group']
         is_diabetic = 'is_diabetic' in request.POST
-        diabetic_level = request.POST['diabetic_level'] if is_diabetic else None
+        diabetic_level = request.POST['diabetic_level']
         phi = request.POST['phi']
         pov = request.POST['pov']
         remarks = request.POST['remarks']
         appointment_id = request.POST['appointment_id']
         # Get the visit and patient objects
+        if is_diabetic == 'No':
+            diabetic_level=None
+        else:
+            diabetic_level=diabetic_level
+            
         visit = Visit.objects.get(appointment_id=appointment_id)
         patient_id = PatientPrimaryData.objects.get(id=visit.patient_id_id)
         # Print the retrieved data for debugging purposes

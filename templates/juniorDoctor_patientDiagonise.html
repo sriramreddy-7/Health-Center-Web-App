@@ -78,14 +78,14 @@
                           </div>
                           <div class="form-group col-md-4">
                            <label for="is_diabetic">IS Diabetic</label>
-                            <select class="custom-select" id="is_diabetic" name="is_diabetic" required>
+                            <select class="custom-select" id="is_diabetic" name="is_diabetic" onchange="toggleInput()" required>
                               <option value="Yes">Yes</option>
                               <option value="No">No</option>
                             </select>
                           </div>
                           <div class="form-group col-md-4">
                             <label for="diabetic_level">Enter Sugar Level</label>
-                            <input type="text" class="form-control" id="bp" name="diabetic_level" placeholder="Enter the Patient BP">
+                            <input type="text" class="form-control" id="diabetic_level" name="diabetic_level" placeholder="Enter the Patient BP" disabled>
                           </div>
                         </div>
                         <div class="form-group">
@@ -129,4 +129,18 @@
                   </div> <!-- /. card -->
                 </div> <!-- /. col -->
               </div> <!-- /. end-section -->
+              <script>
+                function toggleInput() {
+                var dropdown = document.getElementById("is_diabetic");
+                var textInput = document.getElementById("diabetic_level");
+
+                if (dropdown.value === "Yes") {
+                  textInput.disabled = false;  // Enable text input
+                } else {
+                  textInput.disabled = true;   // Disable text input
+                }
+              }
+
+
+              </script>
 {% endblock %}
