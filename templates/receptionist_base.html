@@ -40,6 +40,9 @@
       href="{% static 'assets/rp/vendors/datatables.net-bs4/dataTables.bootstrap4.css' %}"
     />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
+
   </head>
   <body>
     <div class="container-scroller">
@@ -388,5 +391,31 @@
     <script src="{% static 'assets/rp/js/misc.js' %}"></script>
     <script src="{% static 'assets/rp/js/settings.js' %}"></script>
     <script src="{% static 'assets/rp/js/todolist.js' %}"></script>
+
+    <!-- Adding the CDN Jquery -->
+    <script src="{% static 'rp/vendors/datatables.net/jquery.dataTables.js' %}"></script>
+  <script src="{% static 'rp/vendors/datatables.net-bs4/dataTables.bootstrap4.js' %}"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
+  <!-- Additional dependencies for Excel and PDF -->
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.flash.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#order_listing').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+          'copy', 'csv', 'excel', 'pdf', 'print'
+        ],
+        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        pageLength: 10
+      });
+    });
+  </script>
   </body>
 </html>
