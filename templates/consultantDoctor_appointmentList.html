@@ -15,6 +15,7 @@
                           <tr>
                             <th class="text-info">Patient Token</th>
                             <th class="text-info">Patient ID </th>
+                            <th class="text-info">Appointment ID </th>
                             <th class="text-info">Appointment Date</th>
                             <th>Action</th>
                           </tr>
@@ -22,11 +23,12 @@
                         <tbody>
                             {% for x in patient %}
                           <tr>
-                            <td>{{ x.patient_token}}</td>
+                            <td>{{ x.patient_token}} </td>
                             <td>{{ x.patient_id}}</td>
-                            <td>{{ x.appointment_date}}</td>
-                            <td><a href="/consultant_doctor/consultantDoctor_patientDiagonise/{{ x.patient_id }}/" class="btn btn-primary "><span class="fe fe-20 fe-edit"></span>&nbsp;Diagonise</a>
-                            &nbsp; | &nbsp; <a href="/consultant_doctor/consultantDoctor_patientDiagonise_View_Edit/{{ x.patient_id }}/" class="btn btn-secondary"><span class="fe fe-20 fe-external-link"></span>&nbsp;View &nbsp;|&nbsp; Edit</a></td>
+                            <td>{{ x.appointment_id }}</td>
+                            <td>{{ x.visit_date}}</td>
+                            <td><a href="/consultant_doctor/consultantDoctor_patientDiagonise/{{ x.appointment_id }}/" class="btn btn-primary "><span class="fe fe-20 fe-edit"></span>&nbsp;Diagonise</a>
+                            &nbsp; | &nbsp; <a href="/consultant_doctor/consultantDoctor_patientDiagonise_View_Edit/{{ x.appointment_id }}/" class="btn btn-secondary"><span class="fe fe-20 fe-external-link"></span>&nbsp;View &nbsp;|&nbsp; Edit</a></td>
                           </tr>
                          {% endfor%}
                         </tbody>

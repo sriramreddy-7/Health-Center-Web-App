@@ -13,12 +13,12 @@ from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from django.views.decorators.cache import cache_control
 from django.http import HttpResponseRedirect
-from patient.models import PatientPrimaryData,FT,PHR
+from patient.models import PatientPrimaryData,FT,PHR,Visit,JDD
 
 
 def consultantDoctor_dashboard(request):
     patient_count=PatientPrimaryData.objects.count()
-    appt_count=FT.objects.count()
+    appt_count=Visit.objects.count()
     common_records = PatientPrimaryData.objects.filter(patient_id__in=FT.objects.values('patient_id'))
     data={
         'patient_count':patient_count,
@@ -39,14 +39,15 @@ def consultantDoctor_patientList(request):
     return render(request,'consultantDoctor_patientList.html',{'patient':patient})
 
 def consultantDoctor_appointmentList(request):
-    patient=FT.objects.all()
+    patient=Visit.objects.all()
     return render(request,'consultantDoctor_appointmentList.html',{'patient':patient})
 
 
-def consultantDoctor_patientDiagonise(request,patient_id):
-    pd=PatientPrimaryData.objects.get(patient_id=patient_id)
-    ad=FT.objects.get(patient_id=patient_id)
-    phr=PHR.objects.get(patient=pd)
+def consultantDoctor_patientDiagonise(request,appointment_id):
+    ad=Visit.objects.get(appointment_id=appointment_id)
+    pid=ad.patient_id
+    pd=PatientPrimaryData.objects.get(patient_id=pid)
+    phr=JDD.objects.get(appointment_id=appointment_id)
     context={
         'pd':pd,
         'ad':ad,

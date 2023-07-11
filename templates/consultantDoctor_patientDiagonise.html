@@ -12,7 +12,7 @@
                       <strong class="card-title">CCHC In Patient {{pd.patient_id}} Diagonise Form </strong>
                     </div>
                     <div class="card-body">
-                      <form action="/junior_doctor/juniorDoctor_patientDiagonise/{{ pd.patient_id }}/" method="post">
+                      <form action="#" method="post">
                           {% csrf_token %}
                         <div class="form-row">
                           <div class="form-group col-md-4">
@@ -80,8 +80,8 @@
                             <label for="pov">Purpose Of Visit</label>
                           <select class="form-control" name="pov" id="pov">
                               <option value="{{phr.pov}}" selected>{{phr.pov}}</option>
-                              <option value="General Checkup" disabled>General Checkup</option>
-                              <option value="Abnormal Pain" disabled>Abnormal Pain</option>
+                              <!-- <option value="General Checkup" disabled>General Checkup</option>
+                              <option value="Abnormal Pain" disabled>Abnormal Pain</option> -->
                           </select>
                           </div>
                           <div class="form-group col-md-6">

@@ -8,16 +8,23 @@
                       <strong class="card-title">CCHC In Patient {{pd.patient_id}} Diagonise Form </strong>
                     </div>
                     <div class="card-body">
-                      <form action="/junior_doctor/juniorDoctor_patientDiagonise/{{ pd.patient_id }}/" method="post">
+                      <form action="#" method="post">
                           {% csrf_token %}
                         <div class="form-row">
                           <div class="form-group col-md-4">
-                            <label for="patient_token">Patient Token Number</label>
-                            <input type="text" class="form-control" id="patient_token" value="{{ad.patient_token}}" readonly>
+                            <label for="patient_token">Patient Appointment ID</label>
+                            <input type="text" class="form-control" id="patient_token" value="{{ ad.appointment_id }}" readonly>
                           </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-4">
+                            <label for="patient_token">Patient Token Number</label>
+                            <input type="text" class="form-control" id="patient_token" value="{{ ad.patient_token }}" readonly>
+                          </div>
+
                           <div class="form-group col-md-4">
                             <label for="patient_id">Patient ID</label>
-                            <input type="text" class="form-control" id="inputPassword5" name="patient_id" value="{{pd.patient_id}}" readonly>
+                            <input type="text" class="form-control" id="inputPassword5" name="patient_id" value="{{ad.patient_id}}" readonly>
                           </div>
                           <div class="form-group col-md-4">
                             <label for="patient_name">Patient Name</label>
@@ -81,9 +88,8 @@
                           <input type="text" class="form-control" id="phi" name="phi" value="{{ md.phi }}"  readonly>
                           </div>
                           <center>
-                               <a href="{% url 'junior_doctor:juniorDoctor_appointmentList' %}" type="button" class="btn btn-primary" style="text-align:center;">Return</a>
+                               <a href="{% url 'consultant_doctor:consultantDoctor_appointmentList' %}" type="button" class="btn btn-primary" style="text-align:center;">Return</a>
                           </center>
-
 
                     </div> <!-- /. card-body -->
                  </form>

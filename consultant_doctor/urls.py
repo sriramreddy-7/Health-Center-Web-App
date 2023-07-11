@@ -10,7 +10,7 @@ urlpatterns = [
     path('logout_view',views.logout_view,name="logout_view"),
     path('consultantDoctor_patientList',views.consultantDoctor_patientList,name="consultantDoctor_patientList"),
     path('consultantDoctor_appointmentList',views.consultantDoctor_appointmentList,name="consultantDoctor_appointmentList"),
-    path('consultantDoctor_patientDiagonise/<str:patient_id>/',views.consultantDoctor_patientDiagonise,name="consultantDoctor_patientDiagonise"),
+    path('consultantDoctor_patientDiagonise/<str:appointment_id>/',views.consultantDoctor_patientDiagonise,name="consultantDoctor_patientDiagonise"),
     path('consultantDoctor_patientDiagonise_View_Edit/<str:patient_id>/',views.consultantDoctor_patientDiagonise_View_Edit,name="consultantDoctor_patientDiagonise_View_Edit"),
 
 
