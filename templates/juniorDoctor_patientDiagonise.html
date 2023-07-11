@@ -79,8 +79,8 @@
                           <div class="form-group col-md-4">
                            <label for="is_diabetic">IS Diabetic</label>
                             <select class="custom-select" id="is_diabetic" name="is_diabetic" onchange="toggleInput()" required>
-                              <option value="Yes">Yes</option>
-                              <option value="No">No</option>
+                              <option value="True">Yes</option>
+                              <option value="False">No</option>
                             </select>
                           </div>
                           <div class="form-group col-md-4">
@@ -130,11 +130,11 @@
                 </div> <!-- /. col -->
               </div> <!-- /. end-section -->
               <script>
-                function toggleInput() {
+                function toggleInput() { 
                 var dropdown = document.getElementById("is_diabetic");
                 var textInput = document.getElementById("diabetic_level");
 
-                if (dropdown.value === "Yes") {
+                if (dropdown.value === "True") {
                   textInput.disabled = false;  // Enable text input
                 } else {
                   textInput.disabled = true;   // Disable text input

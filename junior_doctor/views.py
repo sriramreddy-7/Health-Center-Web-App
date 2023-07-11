@@ -102,32 +102,31 @@ def juniorDoctor_patientDiagonise(request,appointment_id):
         pulse = request.POST['pulse']
         bp = request.POST['bp']
         blood_group = request.POST['blood_group']
-        is_diabetic = 'is_diabetic' in request.POST
-        diabetic_level = request.POST['diabetic_level']
+        is_diabetic = request.POST.get('is_diabetic')
+        if is_diabetic == 'False':
+            diabetic_level =False
+        else:
+            diabetic_level = request.POST.get('diabetic_level') 
         phi = request.POST['phi']
         pov = request.POST['pov']
         remarks = request.POST['remarks']
         appointment_id = request.POST['appointment_id']
         # Get the visit and patient objects
-        if is_diabetic == 'No':
-            diabetic_level=None
-        else:
-            diabetic_level=diabetic_level
-            
+        # print(appointment_id)
+        # print(patient_id)
+        print('Height:', height)
+        print('Weight',weight)
+        print('pulse:',pulse)
+        print('bp',bp)
+        print('blood_group',blood_group)
+        print('is_diabetic',is_diabetic)
+        print('PHI',phi)
+        print('POV',pov)
+        print('Remarks',remarks) 
         visit = Visit.objects.get(appointment_id=appointment_id)
         patient_id = PatientPrimaryData.objects.get(id=visit.patient_id_id)
         # Print the retrieved data for debugging purposes
-        print(appointment_id)
-        print(patient_id)
-        print(height)
-        print(weight)
-        print(pulse)
-        print(bp)
-        print(blood_group)
-        print(is_diabetic)
-        print(phi)
-        print(pov)
-        print(remarks)
+        
         # Create a new JDD object
         health_record = JDD.objects.create(
             appointment_id=visit,
