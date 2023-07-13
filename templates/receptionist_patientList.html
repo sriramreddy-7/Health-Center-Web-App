@@ -38,7 +38,7 @@
   .dt-buttons .buttons-print {
     background-color: darkorange !important;
     color: black !important;
-    border-color:  darkorange !important;
+    border-color: darkorange !important;
   }
 
   .dt-buttons .buttons-copy:hover,
@@ -58,7 +58,7 @@
         <div class="col-12">
           <div class="table-responsive">
             <div class="table">
-              <table id="order_listing" class="display">
+              <table id="patient_list" class="display">
                 <thead>
                   <tr>
                     <th>#</th>
@@ -145,7 +145,7 @@
 
 <script type="text/javascript">
   $(document).ready(function () {
-    $("#order_listing").DataTable({
+    $("#patient_list").DataTable({
       dom: "Bfrtip",
       buttons: ["copy", "csv", "excel", "pdf", "print"],
       lengthMenu: [

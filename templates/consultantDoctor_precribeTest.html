@@ -1,0 +1,247 @@
+{% extends 'consultantDoctor_base.html' %} {% load static %} {% block body %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+  .dropdown-container {
+    display: flex;
+    flex-direction: column;
+  }
+</style>
+<div class="col-md-12">
+  <div class="card shadow mb-4">
+    <div class="card-header">
+      <strong class="card-title"
+        >CCHC In Patient {{pd.patient_id}} Diagonise Form
+      </strong>
+    </div>
+    <div class="card-body">
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="patient_token">Patient Token Number</label>
+          <input
+            type="text"
+            class="form-control"
+            id="patient_token"
+            value="{{ad.patient_token}}"
+            readonly
+          />
+        </div>
+        <div class="form-group col-md-3">
+          <label for="patient_id">Patient ID</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputPassword5"
+            name="patient_id"
+            value="{{pd.patient_id}}"
+            readonly
+          />
+        </div>
+        <div class="form-group col-md-3">
+          <label for="patient_id">Appointment Id</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputPassword5"
+            name="patient_id"
+            value="{{pd.appointment_id }}"
+            readonly
+          />
+        </div>
+        <div class="form-group col-md-3">
+          <label for="patient_name">Patient Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="patient_name"
+            value="{{pd.patient_name}}"
+            readonly
+          />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="gender">Gender</label>
+          <input
+            type="text"
+            class="form-control"
+            id="gender"
+            value="{{pd.patient_gender}}"
+            readonly
+          />
+        </div>
+        <div class="form-group col-md-4">
+          <label for="dob">Date of Birth</label>
+          <input
+            type="text"
+            class="form-control"
+            id="dob"
+            value="{{pd.patient_dob}}"
+            readonly
+          />
+        </div>
+        <div class="form-group col-md-4">
+          <label for="age">Age</label>
+          <input
+            type="text"
+            class="form-control"
+            id="age"
+            value="{{pd.patient_age}}"
+            readonly
+          />
+        </div>
+      </div>
+      <div class="card-header">
+        <strong class="card-title"
+          >CCHC In Patient {{pd.patient_id}} Diagonise Form
+        </strong>
+      </div>
+      <br />
+      <form
+        id="test-form"
+        action="{% url 'consultant_doctor:consultantDoctor_precribeTest' %}"
+        method="post"
+      >
+        {% csrf_token %}
+        <div class="dropdown-container mb-3"></div>
+
+        <button class="btn btn-primary" type="button" id="add-button">
+          <span class="fe fe-check-square"></span>&nbsp;Add Test
+        </button>
+
+        <br /><br />
+        <input type="submit" class="btn btn-success" value="Submit" />
+      </form>
+    </div>
+  </div>
+  <style>
+    .dropdown-container {
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+  <script>
+    $(document).ready(function () {
+      // Initial set of medical test names
+      var medicalTests = [
+        { name: "Blood Test", id: "blood-test" },
+        { name: "Urine Test", id: "urine-test" },
+        { name: "X-Ray", id: "x-ray" },
+        { name: "MRI Scan", id: "mri-scan" },
+        { name: "ECG", id: "ecg" },
+      ];
+
+      var testLimit = medicalTests.length; // Maximum number of tests allowed
+
+      // Function to generate a dynamic dropdown
+      function generateDropdown(testIndex) {
+        var dropdown = $("<select>").addClass(
+          "form-control medical-test-dropdown"
+        );
+        var dropdownId = "dropdown-" + testIndex;
+
+        dropdown.attr("id", dropdownId);
+        dropdown.append($("<option>").text("Select a test"));
+
+        for (var i = 0; i < medicalTests.length; i++) {
+          dropdown.append(
+            $("<option>")
+              .text(medicalTests[i].name)
+              .attr("value", medicalTests[i].id)
+          );
+        }
+
+        dropdown.change(function () {
+          var selectedTestId = $(this).val();
+          var selectedTestName = $(this).find("option:selected").text();
+
+          if (selectedTestId !== "") {
+            // Disable the selected test in other dropdowns
+            $(".medical-test-dropdown")
+              .not(this)
+              .find("option[value='" + selectedTestId + "']")
+              .prop("disabled", true);
+          }
+
+          if (
+            $(".medical-test-dropdown option:selected[value!='']").length >=
+            testLimit
+          ) {
+            // Disable all dropdowns once all tests are selected
+            $(".medical-test-dropdown option:not(:selected)").prop(
+              "disabled",
+              true
+            );
+          }
+        });
+
+        return dropdown;
+      }
+
+      // Initial dropdown
+      var initialDropdown = generateDropdown(0);
+      $(".dropdown-container").append(initialDropdown);
+
+      // Add button click event
+      $("#add-button").click(function () {
+        var dropdowns = $(".medical-test-dropdown");
+        var selectedTest = dropdowns.last().val();
+
+        if (selectedTest !== "") {
+          // Remove the selected test from the medicalTests array
+          var index = medicalTests.findIndex(function (test) {
+            return test.id === selectedTest;
+          });
+
+          if (index !== -1) {
+            medicalTests.splice(index, 1);
+          }
+        }
+
+        var testIndex = dropdowns.length;
+        if (testIndex < testLimit) {
+          // Generate a new dropdown
+          var newDropdown = generateDropdown(testIndex);
+          $(".dropdown-container").append(newDropdown);
+        } else {
+          alert("You have selected all available tests.");
+          $("#add-button").prop("disabled", true); // Disable the add button
+        }
+      });
+
+      // Submit form
+      $("#test-form").submit(function (e) {
+        e.preventDefault(); // Prevent form submission
+
+        // Collect selected test data
+        var selectedTests = [];
+        $(".medical-test-dropdown option:selected[value!='']").each(
+          function () {
+            var selectedTestId = $(this).val();
+            var selectedTestName = $(this).text();
+            selectedTests.push({ id: selectedTestId, name: selectedTestName });
+          }
+        );
+
+        // Create hidden inputs for each selected test
+        for (var i = 0; i < selectedTests.length; i++) {
+          var hiddenInputId = "test-id-" + i;
+          var hiddenInputName = "test-name-" + i;
+          var hiddenInputIdElement = $("<input>")
+            .attr("type", "hidden")
+            .attr("name", hiddenInputId)
+            .val(selectedTests[i].id);
+          var hiddenInputNameElement = $("<input>")
+            .attr("type", "hidden")
+            .attr("name", hiddenInputName)
+            .val(selectedTests[i].name);
+          $(this).append(hiddenInputIdElement);
+          $(this).append(hiddenInputNameElement);
+        }
+
+        // Submit the form
+        this.submit();
+      });
+    });
+  </script>
+</div>
+{% endblock %}

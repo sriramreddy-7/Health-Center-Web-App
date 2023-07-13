@@ -12,7 +12,7 @@ urlpatterns = [
     path('consultantDoctor_appointmentList',views.consultantDoctor_appointmentList,name="consultantDoctor_appointmentList"),
     path('consultantDoctor_patientDiagonise/<str:appointment_id>/',views.consultantDoctor_patientDiagonise,name="consultantDoctor_patientDiagonise"),
     path('consultantDoctor_patientDiagonise_View_Edit/<str:patient_id>/',views.consultantDoctor_patientDiagonise_View_Edit,name="consultantDoctor_patientDiagonise_View_Edit"),
-
+    path('consultantDoctor_precribeTest',views.consultantDoctor_precribeTest,name="consultantDoctor_precribeTest"),
 
 
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

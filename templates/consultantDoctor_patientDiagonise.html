@@ -108,7 +108,7 @@
                           </div>
 
 
-                               `<a href="" type="button" class="btn mb-2 btn-primary">Precribe Test         </a> &nbsp; &nbsp;
+                               `<a href="{% url 'consultant_doctor:consultantDoctor_precribeTest' %}" type="button" class="btn mb-2 btn-primary">Precribe Test         </a> &nbsp; &nbsp;
                                 <button type="button" class="btn mb-2 btn-secondary" id="showButton" onclick="toggleForm()">Precribe Medicine </button> &nbsp; &nbsp;
                                 <a href="" type="button" class="btn mb-2 btn-success">View Lab Report       </a> &nbsp; &nbsp;
                                 <a href="" type="button" class="btn mb-2 btn-danger">Previous Health History </a>
@@ -122,7 +122,7 @@
             <div class="col-md-12 hidden" id="prescriptionForm">
                 <div class="card shadow mb-4">
                 <div class="card-header">
-                  <strong class="card-title">Medical Precription</strong>
+                  <strong class="card-title">Diagonisis Report</strong>
                 </div>
                 <div class="card-body">
                   <div class="row">

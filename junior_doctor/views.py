@@ -16,11 +16,21 @@ from patient.models import PatientPrimaryData,FT,PHR,Visit,JDD
 from datetime import datetime
 
 def juniorDoctor_dashboard(request):
-    return render(request,'juniorDoctor_dashboard.html')
+    patient=Visit.objects.all()[:6]
+    context={
+        'patient':patient,
+    }
+    return render(request,'juniorDoctor_dashboard.html',context)
 
 def juniorDoctor_appointmentList(request):
-    patient=Visit.objects.all()
-    return render(request,'juniorDoctor_appointmentList.html',{'patient':patient})
+    appointments=Visit.objects.all()
+    for appointment in appointments:
+        try:
+            jdd_data=JDD.objects.get(appointment_id=appointment)
+            appointment.jdd_data_present =True
+        except JDD.DoesNotExist:
+            appointment.jdd_data_present = False
+    return render(request,'juniorDoctor_appointmentList.html',{'appointments':appointments})
 
 def page_not_found(request):
     return render(request,'page_not_found.html')

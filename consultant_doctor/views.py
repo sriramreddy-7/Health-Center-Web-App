@@ -68,7 +68,34 @@ def consultantDoctor_patientDiagonise_View_Edit(request,patient_id):
     return render(request,'consultantDoctor_patientDiagonise_View_Edit.html',context)
 
 
-
+def consultantDoctor_precribeTest(request):
+    if request.method == 'POST':
+        selected_tests = []
+        for i in range(len(request.POST.getlist('test-id-0'))):
+            test_id = request.POST.get(f'test-id-{i}')
+            test_name = request.POST.get(f'test-name-{i}')
+            selected_tests.append({'id': test_id, 'name': test_name})
+            print('Test_id',test_id)
+            print('Test_Name',test_name)
+            print('Selected Tests',selected_tests)
+        # test_ids = request.POST.getlist('test-id')
+        # test_names = request.POST.getlist('test-name')
+        # blood_test=request.POST.get('blood_test')
+        # urine_test=request.POST.get('urine_test')
+        # x_ray=request.POST.get('x_ray')
+        # mri_scan=request.POST.get('mri_scan')
+        # ecg=request.POST.get('ecg')
+        # for test_id, test_name in zip(test_ids, test_names):
+        #     print("Test ID:", test_id)
+        #     print("Test Name:", test_name)
+        # print('Blood Test',blood_test)
+        # print('Urine Test',urine_test)
+        # print('X_Ray',x_ray)
+        # print('MRI Scan',mri_scan)
+        # print('ECG',ecg)
+        # print('Test_ID',test_ids)
+        # print('Test_Name',test_names)
+    return render(request,'consultantDoctor_precribeTest.html')
 
 
 

@@ -20,16 +20,26 @@
                           </tr>
                         </thead>
                         <tbody>
-                            {% for x in patient %}
-                          <tr>`
-                            <td>{{ x.patient_token}} </td>
-                            <td>{{ x.patient_id}}</td>
-                            <td>{{ x.appointment_id}}</td>
-                            <td>{{ x.visit_date}}</td>
-                            <td><a href="/junior_doctor/juniorDoctor_patientDiagonise/{{ x.appointment_id }}/" class="btn btn-primary "><span class="fe fe-20 fe-edit"></span>&nbsp;Diagonise</a>
-                            &nbsp; | &nbsp; <a href="/junior_doctor/juniorDoctor_patientDiagonise_View_Edit/{{ x.patient_id }}/" class="btn btn-secondary"><span class="fe fe-20 fe-external-link"></span>&nbsp;View &nbsp;|&nbsp; Edit</a></td>
-                          </tr>
-                         {% endfor%}
+                          {% for appointment in appointments %}
+                                 <tr>
+                                   <td>{{ appointment.patient_token }}</td>
+                                   <td>{{ appointment.patient_id }}</td>
+                                   <td>{{ appointment.appointment_id }}</td>
+                                   <td>{{ appointment.visit_date }}</td>
+                                   <td>
+                                     {% if appointment.jdd_data_present %}
+                                       <button class="btn btn-primary" disabled><span class="fe fe-check-square"></span>&nbsp;Diagnosed</button>
+                                     {% else %}
+                                       <a href="/junior_doctor/juniorDoctor_patientDiagonise/{{ appointment.appointment_id }}/" class="btn btn-primary"><span class="fe fe-20 fe-edit"></span>&nbsp;Diagnose&nbsp;</a>
+                                     {% endif %}
+                                     &nbsp; | &nbsp;
+                                     <a href="/junior_doctor/juniorDoctor_patientDiagonise_View_Edit/{{ appointment.patient_id }}/" class="btn btn-secondary">
+                                       <span class="fe fe-20 fe-external-link"></span>&nbsp;View &nbsp;|&nbsp; Edit
+                                     </a>
+                                   </td>
+                                 </tr>
+                                 {% endfor %}
+
                         </tbody>
                       </table>
                     </div>

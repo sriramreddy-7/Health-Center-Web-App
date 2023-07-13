@@ -358,3 +358,7 @@ class JDD(models.Model):
     phi = models.TextField(max_length=1000)
     pov = models.TextField(max_length=300)
     remarks = models.TextField(max_length=1000)
+    
+    
+# class MedicalTest(models.Model):
+    
