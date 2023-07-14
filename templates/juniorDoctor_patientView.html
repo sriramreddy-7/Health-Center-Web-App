@@ -115,24 +115,22 @@ tr:nth-child(even) {
 
 <table>
   <tr>
-   
-    <th>Patient ID</th>
-    <th>Appointment ID</th>
-    <th>Visiting Date</th>
-    <th>Height</th>
-    <th>Weight</th>
-    <th>Pulse</th>
+    <th>PATIENT ID</th>
+    <th>APPOINTMENT ID</th>
+    <th>VISTING DATE</th>
+    <th>HEIGHT</th>
+    <th>WEIGHT</th>
+    <th>PULSE</th>
     <th>BP</th>
-    <th>Blood Group</th>
-    <th>IS Diabetic</th>
-    <th>Diabetic Level</th>
+    <th>BLOOD GROUP</th>
+    <th>IS DIABETIC</th>
+    <th>DIABETIC LEVEL</th>
     <th>PHI</th>
     <th>POV</th>
-    <th>Remarks</th>
+    <th>REMARKS</th>
   </tr>
     {% for patient in app_id %}
   <tr>
-    
     <td>{{ patient.patient_id }}</td>
     <td>{{ patient.appointment_id }}</td>
     <td>{{ patient.date_and_time }}</td>
