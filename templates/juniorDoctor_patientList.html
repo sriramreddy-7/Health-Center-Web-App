@@ -28,8 +28,8 @@
                             <td>{{ x.patient_gender}}</td>
                             <td>{{ x.patient_age }}</td>
                             <td>{{ x.registration_date }}</td>
-                            <td><a href="/junior_doctor/juniorDoctor_patientDiagonise/{{ x.patient_id }}/" class="btn btn-primary "><span class="fe fe-20 fe-edit"></span>&nbsp;View</a>
-                            &nbsp; | &nbsp; <a href="/junior_doctor/juniorDoctor_patientDiagonise_View_Edit/{{ x.patient_id }}/" class="btn btn-secondary"><span class="fe fe-20 fe-external-link"></span>&nbsp;View &nbsp;|&nbsp; Edit</a></td>
+                            <td><a href="#" class="btn btn-primary "><span class="fe fe-20 fe-edit"></span>&nbsp;Edit</a>
+                            &nbsp; | &nbsp; <a href="/junior_doctor/juniorDoctor_patientView/{{ x.patient_id }}/" class="btn btn-secondary"><span class="fe fe-20 fe-external-link"></span>&nbsp;View </a></td>
                           </tr>
                          {% endfor%}
                         </tbody>

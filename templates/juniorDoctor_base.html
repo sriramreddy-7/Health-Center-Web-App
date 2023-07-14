@@ -81,8 +81,8 @@
                 </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'junior_doctor:juniorDoctor_patientList' %}">
-                  <span class="ml-lg-2">IP List</span>
+                <a class="nav-link" href="#">
+                  <span class="ml-lg-2">Lab Results</span>
                   <!--<span class="badge badge-pill badge-primary">New</span>-->
                 </a>
               </li>
@@ -91,7 +91,7 @@
                   <span class="ml-lg-2">Patient Management</span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="formsDropdown">
-                  <a class="nav-link pl-lg-2" href="#"><span class="ml-1">Patient's List</span></a>
+                  <a class="nav-link pl-lg-2" href="{% url 'junior_doctor:juniorDoctor_patientList' %}"><span class="ml-1">All Patient</span></a>
                   <a class="nav-link pl-lg-2" href="#"><span class="ml-1">Patient Reports</span></a>
                   <a class="nav-link pl-lg-2" href="#"><span class="ml-1">Patient Search</span></a>
                   <a class="nav-link pl-lg-2" href="#"><span class="ml-1">Medical History</span></a>

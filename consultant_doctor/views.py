@@ -44,62 +44,74 @@ def consultantDoctor_appointmentList(request):
 
 
 def consultantDoctor_patientDiagonise(request,appointment_id):
-    ad=Visit.objects.get(appointment_id=appointment_id)
-    pid=ad.patient_id
-    pd=PatientPrimaryData.objects.get(patient_id=pid)
-    phr=JDD.objects.get(appointment_id=appointment_id)
-    context={
-        'pd':pd,
-        'ad':ad,
-        'phr':phr,
-    }
-    return render(request,'consultantDoctor_patientDiagonise.html',context)
+    try:
+        ad=Visit.objects.get(appointment_id=appointment_id)
+        pid=ad.patient_id
+        pd=PatientPrimaryData.objects.get(patient_id=pid)
+        phr=JDD.objects.get(appointment_id=appointment_id)
+        context={
+            'pd':pd,
+            'ad':ad,
+            'phr':phr,
+        }
+        return render(request,'consultantDoctor_patientDiagonise.html',context)
+    except:
+        return HttpResponse('<h1 style="color:red;">Oops! This Patient is not yet compeleted the Initial Diagonisis At Junior Doctor</h1>')
 
 
 def consultantDoctor_patientDiagonise_View_Edit(request,patient_id):
     pd=PatientPrimaryData.objects.get(patient_id=patient_id)
-    ad=FT.objects.get(patient_id=patient_id)
-    md=PHR.objects.get(patient=pd)
+    # ad=FT.objects.get(patient_id=patient_id)
+    # md=PHR.objects.get(patient=pd)
     context={
         'pd':pd,
-        'ad':ad,
-        'md':md,
+        # 'ad':ad,
+        # 'md':md,
     }
     return render(request,'consultantDoctor_patientDiagonise_View_Edit.html',context)
 
 
-def consultantDoctor_precribeTest(request):
+def consultantDoctor_precribeTest(request,appointment_id):
     if request.method == 'POST':
-        selected_tests = []
-        for i in range(len(request.POST.getlist('test-id-0'))):
-            test_id = request.POST.get(f'test-id-{i}')
-            test_name = request.POST.get(f'test-name-{i}')
-            selected_tests.append({'id': test_id, 'name': test_name})
-            print('Test_id',test_id)
-            print('Test_Name',test_name)
-            print('Selected Tests',selected_tests)
-        # test_ids = request.POST.getlist('test-id')
-        # test_names = request.POST.getlist('test-name')
-        # blood_test=request.POST.get('blood_test')
-        # urine_test=request.POST.get('urine_test')
-        # x_ray=request.POST.get('x_ray')
-        # mri_scan=request.POST.get('mri_scan')
-        # ecg=request.POST.get('ecg')
-        # for test_id, test_name in zip(test_ids, test_names):
-        #     print("Test ID:", test_id)
-        #     print("Test Name:", test_name)
-        # print('Blood Test',blood_test)
-        # print('Urine Test',urine_test)
-        # print('X_Ray',x_ray)
-        # print('MRI Scan',mri_scan)
-        # print('ECG',ecg)
-        # print('Test_ID',test_ids)
-        # print('Test_Name',test_names)
-    return render(request,'consultantDoctor_precribeTest.html')
+        x_ray = request.POST.get('x_ray')
+        echocardiogram = request.POST.get('echocardiogram')
+        electrocardiogram=request.POST.get('electrocardiogram')
+        mri = request.POST.get('mri')
+        stress_test=request.POST.get('stress_test')
+        est=request.POST.get('est')
+        blood_test=request.POST.get('blood_test')
+        urine_test=request.POST.get('urine_test')
+        ct_scan=request.POST.get('ct_scan')
+        thread_mill_test = request.POST.get('thread_mill_test')
+        echo=request.POST.get('echo')
+        angiography=request.POST.get('angiography')
+        print('X_Ray',x_ray)
+        print('echocardiogram',echocardiogram)
+        print('electrocardiogram',electrocardiogram)
+        print('MRI Scan', mri)
+        print('stress_test',stress_test)
+        print('Blood Test',blood_test)
+        print('Urine Test',urine_test)
+        print('est',est)
+        print('ct_scan',ct_scan)
+        print('ECG',est)
+        print('echo',echo)
+        print('angiography',angiography)
+        print('thread_mill_test ',thread_mill_test )
+        return HttpResponse('<h1 style="color:green;">The Test Precribtion is Submitted to the Lab Incharge </h1>')
+        
+    ad=Visit.objects.get(appointment_id=appointment_id)
+    pid=ad.patient_id
+    pd=PatientPrimaryData.objects.get(patient_id=pid)
+    context={
+        'ad':ad,
+        'pd':pd,
+    }
+    return render(request,'consultantDoctor_precribeTest.html',context)
 
 
-
-
+def consultantDoctor_prescription(request):
+    return render(request,'consultantDoctor_prescription.html')
 
 
 

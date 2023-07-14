@@ -171,12 +171,12 @@ def juniorDoctor_patientDiagonise(request,appointment_id):
 
 def juniorDoctor_patientDiagonise_View_Edit(request,patient_id):
     pd=PatientPrimaryData.objects.get(patient_id=patient_id)
-    ad=FT.objects.get(patient_id=patient_id)
-    md=PHR.objects.get(patient=pd)
+    # ad=ValueError.objects.get(patient_id=patient_id)
+    # md=PHR.objects.get(patient=pd)
     context={
         'pd':pd,
-        'ad':ad,
-        'md':md,
+        # 'ad':ad,
+        # 'md':md,
     }
     return render(request,'juniorDoctor_patientDiagonise_View_Edit.html',context)
     # else:
@@ -192,3 +192,13 @@ def juniorDoctor_apl(request):
     for i in jdoctor:
         print(i)
     return render(request,'juniorDoctor_apl.html',context)
+
+
+def juniorDoctor_patientView(request,patient_id):
+    pd=PatientPrimaryData.objects.get(patient_id=patient_id)
+    app_id=JDD.objects.filter(patient_id=pd)
+    context={
+        'pd':pd,
+        'app_id':app_id,
+    }
+    return render(request,'juniorDoctor_patientView.html',context)

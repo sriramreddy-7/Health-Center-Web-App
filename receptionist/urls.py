@@ -19,6 +19,7 @@ urlpatterns = [
     path('receptionist_patientSearch',views.receptionist_patientSearch,name="receptionist_patientSearch"),
     path('receptionist_bookAppointment/<str:patient_id>/',views.receptionist_bookAppointment,name="receptionist_bookAppointment"),
     path('receptionist_patientVisit',views.receptionist_patientVisit,name="receptionist_patientVisit"),
+    path('receptionist_profile',views.receptionist_profile,name="receptionist_profile"),
 
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

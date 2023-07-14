@@ -231,3 +231,6 @@ def receptionist_patientVisit(request):
             return render(request,'receptionist_patientVisit.html')
     except:
         return HttpResponse('<h1 style="color:red;">error while submitting<h1>')
+    
+def receptionist_profile(request):
+    return render(request,'receptionist_profile.html')

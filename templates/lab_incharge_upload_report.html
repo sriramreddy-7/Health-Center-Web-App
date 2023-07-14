@@ -181,8 +181,8 @@
 {% csrf_token %}
         <input type="text" id="patient_id" name="patient_id" value="{{patient.patient_id}}" readonly ><br>
           <label for="report_file">Report File:</label>
-        <input type="file" id="report_file" name="report_file" required><br>
-        <input type="submit" value="Upload">
+        <input type="file" id="report_file" name="report_file" class="form form-control"><br>
+        <input type="submit" value="Upload" class="btn btn-primary">
         </form>
         </div>
     </div>
