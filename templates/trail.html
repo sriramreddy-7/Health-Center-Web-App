@@ -1,4 +1,5 @@
 {% extends 'lab_incharge_base.html' %}
+{% load static %}
 {% block body %}
 <div class="page-header">
   <h3 class="page-title">CCHC</h3>
@@ -19,14 +20,28 @@
       </h4>
         <p class="card-description">Personal Info</p>
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-6">
             <div class="form-group row">
               <label class="col-sm-3 col-form-label">Appointment ID</label>
               <div class="col-sm-9">
                 <input
                   type="text"
                   class="form-control"
-                  value="{{ appid.appointment_id }}"
+                  value="{{ apd.appointment_id }}"
+                  name="patient_id"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Patient Token</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  value="{{ apd.patient_token }}"
                   name="patient_id"
                   readonly
                 />
@@ -106,15 +121,30 @@
               </div>
             </div>
           </div>
+           <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Mobile Number</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  value="{{patient.mobile_number}}"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+          </div>
+          
       <h4 class="card-title" style="color: red">
         Upload Patient Report
       </h4>
 <h1>Upload here from</h1>
-  <form action="/lab_incharge/lab_incharge_upload_report/{{patient.patient_id}}/" method="post" enctype="multipart/form-data">
+  <form action="/lab_incharge/trail/{{patient.patient_id}}/" method="post" enctype="multipart/form-data">
 {% csrf_token %}
         <input type="text" id="patient_id" name="patient_id" value="{{patient.patient_id}}" readonly ><br>
           <label for="report_file">Report File:</label>
-        <input type="file" id="report_file" name="report_file" class="form form-control"><br>
+        <input type="file" id="report_file" name="report_file" class="form form-control" multiple><br>
         <input type="submit" value="Upload" class="btn btn-primary">
         </form>
         </div>
@@ -134,3 +164,4 @@
   </div>
 </div>
 {% endblock %}
+

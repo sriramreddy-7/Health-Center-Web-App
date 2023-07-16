@@ -84,3 +84,29 @@ def lab_incharge_test_orders(request):
     Q(test18__isnull=True)
     )
     return render(request,'lab_incharge_test_orders.html',{'patient':patient})
+
+from django.core.files.base import ContentFile
+
+def trail(request,appointment_id):
+    if request.method == 'POST':
+        patient_id = request.POST['patient_id']
+        report_files = request.FILES.getlist('report_file')
+        
+        for file in report_files:
+            rp = RP(patient_id=patient_id)
+            rp.report_file.save(file.name, ContentFile(file.read()))
+            rp.save()
+        
+        return HttpResponse("Data is submitted to the Consultant Doctor!")
+    else:
+        input_string = appointment_id
+        appid = input_string[14:-1]
+        print(appid)  # Output: AP160723001
+        apd=Visit.objects.get(appointment_id=appid)
+        pd=apd.patient_id
+        patient=PatientPrimaryData.objects.get(patient_id=pd)
+        context={
+            'patient':patient,
+            'apd':apd,
+        }
+        return render(request,'trail.html',context)
