@@ -81,10 +81,7 @@
                           <center>
                                <a href="{% url 'junior_doctor:juniorDoctor_patientList' %}" type="button" class="btn btn-primary" style="text-align:center;">Return</a>
                           </center>
-
-
                     </div> <!-- /. card-body -->
-              
                   </div> <!-- /. card -->
                 </div> <!-- /. col -->
               </div> <!-- /. end-section -->
@@ -110,11 +107,15 @@ tr:nth-child(even) {
 </style>
 </head>
 <body>
-
-<h2>All Patient Diagonsis Sheet</h2>
-
-<table>
-  <tr>
+   <div class="col-md-12">
+<div class="card shadow mb-4">
+  <div class="card-header">
+         <strong class="card-title">CCHC In Patient {{pd.patient_id}} Diagonise Form </strong>
+  </div>
+ <div class="card-body">
+<table class="table accordion-body table-hover table-sm">
+  <tr class="table-primary">
+    <th>VISIT NO</th>
     <th>PATIENT ID</th>
     <th>APPOINTMENT ID</th>
     <th>VISTING DATE</th>
@@ -130,7 +131,8 @@ tr:nth-child(even) {
     <th>REMARKS</th>
   </tr>
     {% for patient in app_id %}
-  <tr>
+  <tr class="table-success">
+    <td>{{ forloop.counter }}</td>
     <td>{{ patient.patient_id }}</td>
     <td>{{ patient.appointment_id }}</td>
     <td>{{ patient.date_and_time }}</td>
@@ -148,4 +150,7 @@ tr:nth-child(even) {
   {% endfor %}
   
 </table>
+</div>
+</div>
+</div>
 {% endblock %}

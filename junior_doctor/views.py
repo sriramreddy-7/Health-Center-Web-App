@@ -195,6 +195,7 @@ def juniorDoctor_apl(request):
 
 
 def juniorDoctor_patientView(request,patient_id):
+    
     pd=PatientPrimaryData.objects.get(patient_id=patient_id)
     app_id=JDD.objects.filter(patient_id=pd)
     context={

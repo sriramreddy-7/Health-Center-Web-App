@@ -115,8 +115,23 @@ def consultantDoctor_prescription(request):
 
 
 
+def consultantDoctor_patientView(request):
+    patient_id='CCHC202307050008'
+    pd=PatientPrimaryData.objects.get(patient_id=patient_id)
+    app_id=JDD.objects.filter(patient_id=pd)
+    context={
+        'pd':pd,
+        'app_id':app_id,
+    }
+    return render(request,'consultantDoctor_patientView.html',context)
 
 
 
-
-
+def consultantDoctor_all_patients_medical_details(request):
+    pd=PatientPrimaryData.objects.all()
+    app_id=JDD.objects.all()
+    context={
+        'pd':pd,
+        'app_id':app_id,
+    }
+    return render(request,'consultantDoctor_all_patients_medical_details.html',context)
