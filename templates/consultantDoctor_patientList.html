@@ -41,30 +41,26 @@
                               </button>
                               <div class="dropdown-menu dropdown-menu-right">
                                 <a class="dropdown-item" href="consultantDoctor_patientDiagonise_View_Edit/{{ x.patient_id }}/">Edit</a>
-                                <a class="dropdown-item" href="#">Remove</a>
+                                <a class="dropdown-item" href="consultantDoctor_patientView/{{ x.patient_id }}/">View</a>
                                 <a class="dropdown-item" href="#">Assign</a>
                               </div>
                             </td>
                           </tr>
-
                     {% endfor %}
                         </tbody>
                       </table>
                     </div>
                   </div>
                 </div>
-
-
-
-    <script src="{% static 'doctor/js/jquery.dataTables.min.js' %}"></script>
-    <script src="{% static 'doctor/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'assets/doctor/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'assets/doctor/js/dataTables.bootstrap4.min.js' %}"></script>
     <script>
       $('#dataTable-1').DataTable(
       {
         autoWidth: true,
         "lengthMenu": [
-          [16, 32, 64, -1],
-          [16, 32, 64, "All"]
+          [8,16, 32, 64, -1],
+          [8,16, 32, 64, "All"]
         ]
       });
     </script>

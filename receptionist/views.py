@@ -124,7 +124,7 @@ def receptionist_patientList(request):
     return render(request,'receptionist_patientList.html',{'patient':patient,'patient_count':patient_count})
 
 def receptionist_appointmentList(request):
-    apd=FT.objects.all()
+    apd=Visit.objects.all()
     return render(request,'receptionist_appointmentList.html',{'apd':apd})
 
 

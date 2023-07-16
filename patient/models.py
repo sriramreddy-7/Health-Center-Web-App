@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
 from datetime import datetime
+from django.utils import timezone
+
 
 class PatientPrimaryData(models.Model):
     patient_id = models.CharField(max_length=16, unique=True)
@@ -243,7 +245,7 @@ class RP(models.Model):
         
 #         super().save(*args, **kwargs)
         
-from django.utils import timezone
+
 
 # class Visit(models.Model):
 #     patient_id = models.ForeignKey('PatientPrimaryData', on_delete=models.CASCADE)
@@ -358,7 +360,32 @@ class JDD(models.Model):
     phi = models.TextField(max_length=1000)
     pov = models.TextField(max_length=300)
     remarks = models.TextField(max_length=1000)
+        
+#class MedicalTest(models.Model):
+class Test(models.Model):
+    appointment_id = models.OneToOneField('Visit', on_delete=models.CASCADE, primary_key=True)
+    patient_id = models.ForeignKey('PatientPrimaryData', on_delete=models.CASCADE)
+    remark=models.CharField(max_length=250,null=True)
+    test1=models.CharField(max_length=100,null=True)
+    test2=models.CharField(max_length=100,null=True)
+    test3=models.CharField(max_length=100,null=True)
+    test3=models.CharField(max_length=100,null=True)
+    test4=models.CharField(max_length=100,null=True)
+    test5=models.CharField(max_length=100,null=True)
+    test6=models.CharField(max_length=100,null=True)
+    test7=models.CharField(max_length=100,null=True)
+    test8=models.CharField(max_length=100,null=True)
+    test9=models.CharField(max_length=100,null=True)
+    test10=models.CharField(max_length=100,null=True)
+    test11=models.CharField(max_length=100,null=True)
+    test12=models.CharField(max_length=100,null=True)
+    test13=models.CharField(max_length=100,null=True)
+    test14=models.CharField(max_length=100,null=True)
+    test15=models.CharField(max_length=100,null=True)
+    test16=models.CharField(max_length=100,null=True)
+    test17=models.CharField(max_length=100,null=True)
+    test18=models.CharField(max_length=100,null=True)
+    date_and_time = models.DateTimeField(auto_now_add=True)
     
     
-# class MedicalTest(models.Model):
     

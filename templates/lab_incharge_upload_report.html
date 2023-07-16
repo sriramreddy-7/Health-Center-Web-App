@@ -15,11 +15,24 @@
   <div class="card">
     <div class="card-body">
       <h4 class="card-title" style="color: red">
-        CCHC Patient  Form
+        CCHC Patient Form
       </h4>
-        <p class="card-description">Personal info</p>
-
+        <p class="card-description">Personal Info</p>
         <div class="row">
+          <div class="col-md-12">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Appointment ID</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  value="{{ appid.appointment_id }}"
+                  name="patient_id"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
           <div class="col-md-6">
             <div class="form-group row">
               <label class="col-sm-3 col-form-label">Patient ID</label>
@@ -74,9 +87,7 @@
                       value="{{patient.patient_dob}}"
                       readonly
                 />
-
                       </div>
-
               </div>
             </div>
           </div>
@@ -95,85 +106,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="form-group row">
-              <label class="col-sm-3 col-form-label">Gaurdian</label>
-              <div class="col-sm-9">
-                <input
-                  type="text"
-                  class="form-control"
-                  value="{{patient.guardian_name}}"
-
-                  readonly
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        <p class="card-description">Address</p>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group row">
-              <label class="col-sm-3 col-form-label">Relation</label>
-              <div class="col-sm-9">
-                <input
-                  type="text"
-                  class="form-control"
-                  value="{{patient.relationship}}"
-
-                  readonly
-                />
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group row">
-              <label class="col-sm-3 col-form-label" for="pstate">Mobile Number</label>
-              <div class="col-sm-9">
-                <input
-                  type="text"
-                  class="form-control"
-                  value="{{patient.mobile_number}}"
-                  readonly
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group row">
-              <label class="col-sm-3 col-form-label" for="pdist"
-                >District</label
-              >
-              <div class="col-sm-9">
-                <input
-                  type="text"
-                  class="form-control"
-                  value="{{patient.district}}"
-
-                  readonly
-                />
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group row">
-              <label class="col-sm-3 col-form-label" for="paddress"
-                >State</label
-              >
-              <div class="col-sm-9">
-                <input
-                  type="text"
-                  class="form-control"
-                  value="{{patient.state}}"
-
-                  readonly
-                />
-              </div>
-            </div>
-          </div>
-          <h4 class="card-title" style="color: red">
+      <h4 class="card-title" style="color: red">
         Upload Patient Report
       </h4>
 <h1>Upload here from</h1>

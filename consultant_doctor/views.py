@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate,logout,login
 # from django.contrib.auth.models import User
 from django.conf import settings
 from django.contrib import messages
-
+from django.utils import timezone
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from django.db.utils import IntegrityError
@@ -13,12 +13,13 @@ from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from django.views.decorators.cache import cache_control
 from django.http import HttpResponseRedirect
-from patient.models import PatientPrimaryData,FT,PHR,Visit,JDD
+from patient.models import PatientPrimaryData,FT,PHR,Visit,JDD,Test
 
 
 def consultantDoctor_dashboard(request):
+    today= timezone.now().date()
     patient_count=PatientPrimaryData.objects.count()
-    appt_count=Visit.objects.count()
+    appt_count=Visit.objects.filter(visit_date=today).count()
     common_records = PatientPrimaryData.objects.filter(patient_id__in=FT.objects.values('patient_id'))
     data={
         'patient_count':patient_count,
@@ -73,6 +74,8 @@ def consultantDoctor_patientDiagonise_View_Edit(request,patient_id):
 
 def consultantDoctor_precribeTest(request,appointment_id):
     if request.method == 'POST':
+        appointment_id=request.POST.get('appointment_id')
+        patient_id=request.POST.get('patient_id')
         x_ray = request.POST.get('x_ray')
         echocardiogram = request.POST.get('echocardiogram')
         electrocardiogram=request.POST.get('electrocardiogram')
@@ -85,6 +88,8 @@ def consultantDoctor_precribeTest(request,appointment_id):
         thread_mill_test = request.POST.get('thread_mill_test')
         echo=request.POST.get('echo')
         angiography=request.POST.get('angiography')
+        print('Appointment_Id',appointment_id)
+        print('Patient_Id',patient_id)
         print('X_Ray',x_ray)
         print('echocardiogram',echocardiogram)
         print('electrocardiogram',electrocardiogram)
@@ -98,6 +103,25 @@ def consultantDoctor_precribeTest(request,appointment_id):
         print('echo',echo)
         print('angiography',angiography)
         print('thread_mill_test ',thread_mill_test )
+        visit = Visit.objects.get(appointment_id=appointment_id)
+        patient_id = PatientPrimaryData.objects.get(id=visit.patient_id_id)
+        test=Test.objects.create(
+            appointment_id=visit,
+            patient_id=patient_id,
+            test1=x_ray,
+            test2=echocardiogram,
+            test3=electrocardiogram,
+            test4=mri,
+            test5=stress_test,
+            test6=est,
+            test7=blood_test,
+            test8=urine_test,
+            test9=ct_scan,
+            test10=thread_mill_test,
+            test11=echo,
+            test12=angiography, 
+        )
+        test.save()
         return HttpResponse('<h1 style="color:green;">The Test Precribtion is Submitted to the Lab Incharge </h1>')
         
     ad=Visit.objects.get(appointment_id=appointment_id)
@@ -115,8 +139,8 @@ def consultantDoctor_prescription(request):
 
 
 
-def consultantDoctor_patientView(request):
-    patient_id='CCHC202307050008'
+def consultantDoctor_patientView(request,patient_id):
+    # patient_id='CCHC202307050008'
     pd=PatientPrimaryData.objects.get(patient_id=patient_id)
     app_id=JDD.objects.filter(patient_id=pd)
     context={
