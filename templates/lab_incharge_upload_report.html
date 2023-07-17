@@ -113,8 +113,8 @@
   <form action="/lab_incharge/lab_incharge_upload_report/{{patient.patient_id}}/" method="post" enctype="multipart/form-data">
 {% csrf_token %}
         <input type="text" id="patient_id" name="patient_id" value="{{patient.patient_id}}" readonly ><br>
-          <label for="report_file">Report File:</label>
-        <input type="file" id="report_file" name="report_file" class="form form-control"><br>
+        <label for="report_file">Report File:</label>
+        <input type="file" id="report_file" name="report_file" class="form form-control" ><br>
         <input type="submit" value="Upload" class="btn btn-primary">
         </form>
         </div>

@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 from datetime import datetime
 from django.utils import timezone
-
+import os
 
 class PatientPrimaryData(models.Model):
     patient_id = models.CharField(max_length=16, unique=True)
@@ -148,9 +148,24 @@ class FT(models.Model):
 
 def get_report_upload_path(instance, filename):
         # Generate the new filename based on the patient_id
-        new_filename = f"{instance.patient_id}.png"
+        new_filename = f"{instance.appointment_id}.png"
         # Return the complete upload path
         return f"reports/{new_filename}"
+    
+    # filename, _ = os.path.splitext(filename)
+    # patient_id = str(instance.patient_id)
+    # timestamp = timezone.now().strftime('%Y%m%d%H%M%S')
+    # new_filename = f"{patient_id}_{timestamp}.png"
+    # return f"{new_filename}"
+
+
+# def get_upload_path(instance, filename):
+#     filename, _ = os.path.splitext(filename)
+#     patient_id = str(instance.patient_id)
+#     timestamp = timezone.now().strftime('%Y%m%d%H%M%S')
+#     new_filename = f"{patient_id}_{timestamp}.png"
+#     return os.path.join('reports', new_filename)
+
 
 class RP(models.Model):
     patient_id = models.CharField(max_length=16)
@@ -388,4 +403,13 @@ class Test(models.Model):
     date_and_time = models.DateTimeField(auto_now_add=True)
     
     
-    
+
+class MedicalTestResult(models.Model):
+    appointment_id = models.CharField(max_length=20, unique=True, primary_key=True)
+    patient_id = models.ForeignKey('PatientPrimaryData', on_delete=models.CASCADE)
+    report_file = models.ImageField(upload_to=get_report_upload_path)
+    uploaded_datetime = models.DateTimeField(auto_now_add=True)
+
+    def get_report_upload_path(instance, filename):
+        new_filename = f"{instance.appointment_id}.pdf"
+        return f"reports/{new_filename}"  

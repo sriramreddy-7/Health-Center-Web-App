@@ -13,7 +13,7 @@ from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from django.views.decorators.cache import cache_control
 from django.http import HttpResponseRedirect
-from patient.models import PatientPrimaryData,FT,PHR,Visit,JDD,Test
+from patient.models import PatientPrimaryData,FT,PHR,Visit,JDD,Test,MedicalTestResult
 
 
 def consultantDoctor_dashboard(request):
@@ -50,10 +50,12 @@ def consultantDoctor_patientDiagonise(request,appointment_id):
         pid=ad.patient_id
         pd=PatientPrimaryData.objects.get(patient_id=pid)
         phr=JDD.objects.get(appointment_id=appointment_id)
+        rep = get_object_or_404(MedicalTestResult, appointment_id=appointment_id)
         context={
             'pd':pd,
             'ad':ad,
             'phr':phr,
+            'rep':rep,
         }
         return render(request,'consultantDoctor_patientDiagonise.html',context)
     except:

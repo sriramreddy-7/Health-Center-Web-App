@@ -11,7 +11,7 @@ from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from django.views.decorators.cache import cache_control
 from django.http import HttpResponseRedirect
-from patient.models import PatientPrimaryData,FT,RP,Test,Visit
+from patient.models import PatientPrimaryData,FT,RP,Test,Visit,MedicalTestResult
 from django.db.models import Q
 # Create your views here.
 
@@ -54,11 +54,11 @@ def lab_incharge_upload_report(request,appointment_id):
 
 
 def lab_Incharge_patient_reports(request):
-    patient=RP.objects.all()
+    patient=MedicalTestResult.objects.all()
     return render(request,'lab_Incharge_patient_reports.html',{'patient':patient})
 
 def lab_Incharge_patient_reports_gallery(request):
-    patient=RP.objects.all()
+    patient=MedicalTestResult.objects.all()
     return render(request,'lab_Incharge_patient_reports_gallery.html',{'patient':patient})
 
 
@@ -87,15 +87,23 @@ def lab_incharge_test_orders(request):
 
 from django.core.files.base import ContentFile
 
-def trail(request,appointment_id):
+'''def trail(request,appointment_id):
     if request.method == 'POST':
+        appid=request.POST.get('appointment_id')
+        visit=Visit.objects.get(appointment_id=appid)
         patient_id = request.POST['patient_id']
+        patient=PatientPrimaryData.objects.get(patient_id= patient_id)
         report_files = request.FILES.getlist('report_file')
-        
+        print('appid:',appid)
+        print('visit',visit)
+        print('patient_id',patient_id)
+        print('patient',patient)
+        print('report_files',report_files)        
         for file in report_files:
-            rp = RP(patient_id=patient_id)
+            rp = MedicalTestResult(patient_id=patient,appointment_id=visit)
             rp.report_file.save(file.name, ContentFile(file.read()))
             rp.save()
+            print(rp)
         
         return HttpResponse("Data is submitted to the Consultant Doctor!")
     else:
@@ -109,4 +117,32 @@ def trail(request,appointment_id):
             'patient':patient,
             'apd':apd,
         }
-        return render(request,'trail.html',context)
+        return render(request,'trail.html',context)'''
+        
+def trail(request, appointment_id):
+    if request.method == 'POST':
+        appid = request.POST.get('appointment_id')
+        visit = Visit.objects.get(appointment_id=appid)
+        patient_id = request.POST['patient_id']
+        patient = PatientPrimaryData.objects.get(patient_id=patient_id)
+        report_files = request.FILES.getlist('report_file')
+        
+        for file in report_files:
+            rp = MedicalTestResult(patient_id=patient, appointment_id=visit.appointment_id)
+            rp.report_file.save(file.name, ContentFile(file.read()))
+            rp.save()
+        
+        return HttpResponse("Data is submitted to the Consultant Doctor!")
+    
+    else:
+        input_string = appointment_id
+        appid = input_string[14:-1]
+        apd = Visit.objects.get(appointment_id=appid)
+        pd = apd.patient_id
+        patient = PatientPrimaryData.objects.get(patient_id=pd)
+        context = {
+            'patient': patient,
+            'apd': apd,
+        }
+        return render(request, 'trail.html', context)
+       
