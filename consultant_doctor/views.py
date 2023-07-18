@@ -45,21 +45,54 @@ def consultantDoctor_appointmentList(request):
 
 
 def consultantDoctor_patientDiagonise(request,appointment_id):
-    try:
-        ad=Visit.objects.get(appointment_id=appointment_id)
-        pid=ad.patient_id
-        pd=PatientPrimaryData.objects.get(patient_id=pid)
-        phr=JDD.objects.get(appointment_id=appointment_id)
+    '''try:
+        ad = Visit.objects.get(appointment_id=appointment_id)
+        pid = ad.patient_id
+        pd = PatientPrimaryData.objects.get(patient_id=pid)
+        phr = JDD.objects.get(appointment_id=appointment_id)
         rep = get_object_or_404(MedicalTestResult, appointment_id=appointment_id)
-        context={
-            'pd':pd,
-            'ad':ad,
-            'phr':phr,
-            'rep':rep,
+        context = {
+            'pd': pd,
+            'ad': ad,
+            'phr': phr,
+            'rep': rep,
         }
-        return render(request,'consultantDoctor_patientDiagonise.html',context)
-    except:
-        return HttpResponse('<h1 style="color:red;">Oops! This Patient is not yet compeleted the Initial Diagonisis At Junior Doctor</h1>')
+        return render(request, 'consultantDoctor_patientDiagonise.html', context)
+    except MedicalTestResult.DoesNotExist:
+        rep = None
+        context = {
+            'pd': pd,
+            'ad': ad,
+            'phr': phr,
+            'rep': rep,
+        }
+        return render(request, 'consultantDoctor_patientDiagonise.html', context)'''
+    try:
+        
+        ad = get_object_or_404(Visit, appointment_id=appointment_id)
+        pid = ad.patient_id
+        pd = get_object_or_404(PatientPrimaryData, patient_id=pid)
+        phr = get_object_or_404(JDD, appointment_id=appointment_id)
+        
+        try:
+            rep = MedicalTestResult.objects.get(appointment_id=appointment_id)
+        except MedicalTestResult.DoesNotExist:
+            rep = None
+
+        context = {
+            'pd': pd,
+            'ad': ad,
+            'phr': phr,
+            'rep': rep,
+        }
+        return render(request, 'consultantDoctor_patientDiagonise.html', context)
+    except Visit.DoesNotExist:
+        return HttpResponse("Visit not found.")
+    except PatientPrimaryData.DoesNotExist:
+        return HttpResponse("Patient primary data not found.")
+    except JDD.DoesNotExist:
+        return HttpResponse("JDD data not found.")
+        # return HttpResponse('<h1 style="color:red;">Oops! This Patient is not yet compeleted the Initial Diagonisis At Junior Doctor</h1>')
 
 
 def consultantDoctor_patientDiagonise_View_Edit(request,patient_id):
@@ -161,3 +194,19 @@ def consultantDoctor_all_patients_medical_details(request):
         'app_id':app_id,
     }
     return render(request,'consultantDoctor_all_patients_medical_details.html',context)
+
+
+def medicine(request):
+    if request.method == 'POST':
+        tablet_names = request.POST.getlist('tablet_name[]')
+        feeding_rules = request.POST.getlist('feeding_rule[]')
+        dosages = request.POST.getlist('dosage[]')
+        feeding_days = request.POST.getlist('feeding_days[]')
+
+        # Print the values
+        for i in range(len(tablet_names)):
+            print(f"Form Row {i+1}:")
+            print(f"Tablet Name: {tablet_names[i]}")
+            print(f"Feeding Rule: {feeding_rules[i]}")
+            print(f"Dosage: {dosages[i]}")
+    return render(request,'medicine.html')

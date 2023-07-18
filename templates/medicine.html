@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCHC Consultant Doctor Dashboard</title>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+<body>
+<style>
+    html, body {
+        padding-top: 20px;
+    }
+
+    [data-role="dynamic-fields"] > .form-inline + .form-inline {
+        margin-top: 0.5em;
+    }
+
+    [data-role="dynamic-fields"] > .form-inline [data-role="add"] {
+        display: none;
+    }
+
+    [data-role="dynamic-fields"] > .form-inline:last-child [data-role="add"] {
+        display: inline-block;
+    }
+
+    [data-role="dynamic-fields"] > .form-inline:last-child [data-role="remove"] {
+        display: none;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+           <form action="{% url 'consultant_doctor:medicine' %}" method="POST">
+                        {% csrf_token %}
+                <div data-role="dynamic-fields">
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <label class="sr-only" for="tablet-name">Tablet Name</label>
+                            <select type="text" class="form-control" id="tablet-name" name="tablet_name[]">
+                                <option value="">Select Tablet Name</option>
+                                <option value="Aspirin">Aspirin</option>
+                                <option value="Clopidogrel">Clopidogrel</option>
+                                <option value="Nitroglycerin">Nitroglycerin</option>
+                                <option value="Atenolol">Atenolol</option>
+                                <option value="Metoprolol">Metoprolol</option>
+                                <option value="Lisinopril">Lisinopril</option>
+                                <option value="Ramipril">Ramipril</option>
+                                <option value="Losartan">Losartan</option>
+                                <option value="Carvedilol">Carvedilol</option>
+                                <option value="Digoxin">Digoxin</option>
+                                <option value="Warfarin">Warfarin</option>
+                                <option value="Diltiazem">Diltiazem</option>
+                                <option value="Amiodarone">Amiodarone</option>
+                                <option value="Furosemide">Furosemide</option>
+                                <option value="Spironolactone">Spironolactone</option>
+                                <option value="Apixaban">Apixaban</option>
+                                <option value="Rivaroxaban">Rivaroxaban</option>
+                                <option value="Prasugrel">Prasugrel</option>
+                                <option value="Enoxaparin">Enoxaparin</option>
+                                <option value="Isosorbide mononitrate">Isosorbide mononitrate</option>
+                            </select>
+                        </div>
+
+                        <span>-|-</span>
+
+                        <div class="form-group">
+                            <label class="sr-only" for="feeding-rule">Feeding Rule</label>
+                            <select type="text" class="form-control" id="feeding-rule" name="feeding_rule[]">
+                                <option value="">Select Feeding Rule</option>
+                                <option value="111">1-1-1</option>
+                                <option value="110">1-1-0</option>
+                                <option value="101">1-0-1</option>
+                                <option value="100">1-0-0</option>
+                                <option value="011">0-1-1</option>
+                                <option value="010">0-1-0</option>
+                                <option value="001">0-0-1</option>
+                            </select>
+                        </div>
+
+                        <span>-|-</span>
+
+                        <div class="form-group">
+                            <label class="sr-only" for="dosage">Dosage</label>
+                            <input type="text" class="form-control" id="dosage" name="dosage[]" placeholder="Dosage">
+                        </div>
+
+                        <span>-|-</span>
+
+                        <div class="form-group">
+                            <label class="sr-only" for="feeding-days">Feeding Days</label>
+                            <input type="text" class="form-control" id="feeding-days" name="feeding_days[]" placeholder="Feeding Days">
+                        </div>
+
+                        <button class="btn btn-danger" data-role="remove">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+
+                        <button class="btn btn-primary" data-role="add">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                    </div> <!-- /div.form-inline -->
+                </div> <!-- /div[data-role="dynamic-fields"] -->
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div> <!-- /div.col-md-12 -->
+    </div> <!-- /div.row -->
+</div>
+<script>
+    $(function () {
+        // Remove button click
+        $(document).on(
+            'click',
+            '[data-role="dynamic-fields"] > .form-inline [data-role="remove"]',
+            function (e) {
+                e.preventDefault();
+                $(this).closest('.form-inline').remove();
+            }
+        );
+        // Add button click
+        $(document).on(
+            'click',
+            '[data-role="dynamic-fields"] > .form-inline [data-role="add"]',
+            function (e) {
+                e.preventDefault();
+                var container = $(this).closest('[data-role="dynamic-fields"]');
+                new_field_group = container.children().filter('.form-inline:first-child').clone();
+                new_field_group.find('input').each(function () {
+                    $(this).val('');
+                });
+                container.append(new_field_group);
+            }
+        );
+    });
+</script>
+</body>
+</html>

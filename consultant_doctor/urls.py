@@ -15,5 +15,7 @@ urlpatterns = [
     path('consultantDoctor_prescription',views.consultantDoctor_prescription,name='consultantDoctor_prescription'),
     path('consultantDoctor_patientView/<str:patient_id>/',views.consultantDoctor_patientView,name="consultantDoctor_patientView"),
     path('consultantDoctor_all_patients_medical_details',views.consultantDoctor_all_patients_medical_details,name='consultantDoctor_all_patients_medical_details'),
+    path('medicine',views.medicine,name="medicine"),
 
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
