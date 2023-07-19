@@ -215,12 +215,23 @@
             Precribe Medicine
           </button>
           &nbsp; &nbsp;
-          <a href="{{ rep.report_file.url }}" type="button" class="btn mb-2 btn-success" target="_blank"
+          <a
+            href="{{ rep.report_file.url }}"
+            type="button"
+            class="btn mb-2 btn-success"
+            target="_blank"
             >View Lab Report
           </a>
           &nbsp; &nbsp;
           <a href="" type="button" class="btn mb-2 btn-danger"
             >Previous Health History
+          </a>
+          &nbsp; &nbsp;
+          <a
+            href="{% url 'consultant_doctor:medicine' %}"
+            type="button"
+            class="btn mb-2 btn-warning"
+            >Medicine
           </a>
         </div>
       </form>

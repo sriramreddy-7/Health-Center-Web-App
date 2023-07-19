@@ -157,8 +157,7 @@ def get_report_upload_path(instance, filename):
     # timestamp = timezone.now().strftime('%Y%m%d%H%M%S')
     # new_filename = f"{patient_id}_{timestamp}.png"
     # return f"{new_filename}"
-
-
+    
 # def get_upload_path(instance, filename):
 #     filename, _ = os.path.splitext(filename)
 #     patient_id = str(instance.patient_id)

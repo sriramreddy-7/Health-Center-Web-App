@@ -205,8 +205,22 @@ def medicine(request):
 
         # Print the values
         for i in range(len(tablet_names)):
-            print(f"Form Row {i+1}:")
+            print(f"Medicine {i+1}:")
             print(f"Tablet Name: {tablet_names[i]}")
             print(f"Feeding Rule: {feeding_rules[i]}")
+            print(f"feeding_days: {feeding_days[i]}")
             print(f"Dosage: {dosages[i]}")
+            
+        medicine_details_list = [
+            {
+                'tablet_name': tablet_names[i],
+                'feeding_rule': feeding_rules[i],
+                'dosage': dosages[i],
+                'feeding_days': feeding_days[i]
+            }
+            for i in range(len(tablet_names))
+        ]
+        return render(request,'prescription.html',{'medicine_details_list':medicine_details_list})
+
+        
     return render(request,'medicine.html')
