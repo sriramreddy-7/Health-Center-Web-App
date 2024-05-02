@@ -114,12 +114,12 @@ WSGI_APPLICATION = 'cchc.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 # DATABASES = {
 #     'default': {
@@ -156,11 +156,11 @@ WSGI_APPLICATION = 'cchc.wsgi.application'
 #     }
 # }
 
-import dj_database_url
+# import dj_database_url
 
-DATABASES = {
-    'default': dj_database_url.parse('postgresql://postgres:ojwDgfMJHBkMm8y4QZba@containers-us-west-12.railway.app:6164/railway')
-}
+# DATABASES = {
+#     'default': dj_database_url.parse('postgresql://postgres:ojwDgfMJHBkMm8y4QZba@containers-us-west-12.railway.app:6164/railway')
+# }
 
 
 
