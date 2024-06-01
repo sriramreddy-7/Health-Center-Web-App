@@ -15,8 +15,6 @@ from django.http import HttpResponseRedirect,HttpResponse
 from django.views.decorators.cache import never_cache
 
 
-
-
 def index(request):
     return render(request,'index.html')
 
@@ -42,7 +40,7 @@ def receptionist_login(request):
             return redirect('receptionist:receptionist_dashboard')
             # return render(request, 'ReceptionistDBPage.html')
         else:
-             return render(request,'receptionist_login.html',context)
+            return render(request,'receptionist_login.html',context)
 
     else:
         return render(request,'receptionist_login.html',context)
@@ -91,8 +89,6 @@ def junior_doctor_login(request):
         return render(request,'junior_doctor_login.html',context)
 
 
-
-
 def consultant_doctor_login(request):
     context={
         "msg":"Consultant Doctor",
@@ -109,10 +105,10 @@ def consultant_doctor_login(request):
             return redirect('consultant_doctor:consultantDoctor_dashboard')
             # return render(request, 'ReceptionistDBPage.html')
         else:
-             return render(request,'consultant_doctor_login.html',context)
+            return render(request,'consultant_doctor_login.html',context)
 
     else:
-          return render(request,'consultant_doctor_login.html',context)
+        return render(request,'consultant_doctor_login.html',context)
 
 
 
@@ -132,8 +128,8 @@ def admin_login(request):
             return redirect('hospital_admin:admin_dashboard')
             # return render(request, 'ReceptionistDBPage.html')
         else:
-             return render(request,'admin_login.html',context)
+            return render(request,'admin_login.html',context)
 
     else:
-          return render(request,'admin_login.html',context)
+        return render(request,'admin_login.html',context)
 
