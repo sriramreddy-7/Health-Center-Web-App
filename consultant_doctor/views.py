@@ -13,8 +13,8 @@ from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from django.views.decorators.cache import cache_control
 from django.http import HttpResponseRedirect
-from patient.models import PatientPrimaryData,FT,PHR,Visit,JDD,Test,MedicalTestResult
-
+from patient.models import PatientPrimaryData,FT,PHR,Visit,JDD,Test,MedicalTestResult,PatientTest, TestForm,TestReport,Medicine
+from patient.models import PatientPrescription, PrescribedMedicine
 
 def consultantDoctor_dashboard(request):
     today= timezone.now().date()
@@ -37,54 +37,48 @@ def logout_view(request):
 
 def consultantDoctor_patientList(request):
     patient=PatientPrimaryData.objects.all()
+    
     return render(request,'consultantDoctor_patientList.html',{'patient':patient})
 
 def consultantDoctor_appointmentList(request):
     patient=Visit.objects.all()
+    for p in patient:
+        try:
+            prescription = PatientPrescription.objects.get(appointment_id=p.appointment_id)
+            p.prescription_generated = True
+        except PatientPrescription.DoesNotExist:
+            p.prescription_generated = False
     return render(request,'consultantDoctor_appointmentList.html',{'patient':patient})
 
 
-def consultantDoctor_patientDiagonise(request,appointment_id):
-    '''try:
-        ad = Visit.objects.get(appointment_id=appointment_id)
-        pid = ad.patient_id
-        pd = PatientPrimaryData.objects.get(patient_id=pid)
-        phr = JDD.objects.get(appointment_id=appointment_id)
-        rep = get_object_or_404(MedicalTestResult, appointment_id=appointment_id)
-        context = {
-            'pd': pd,
-            'ad': ad,
-            'phr': phr,
-            'rep': rep,
-        }
-        return render(request, 'consultantDoctor_patientDiagonise.html', context)
-    except MedicalTestResult.DoesNotExist:
-        rep = None
-        context = {
-            'pd': pd,
-            'ad': ad,
-            'phr': phr,
-            'rep': rep,
-        }
-        return render(request, 'consultantDoctor_patientDiagonise.html', context)'''
+
+def consultantDoctor_patientDiagonise(request, appointment_id):
     try:
-        
         ad = get_object_or_404(Visit, appointment_id=appointment_id)
         pid = ad.patient_id
         pd = get_object_or_404(PatientPrimaryData, patient_id=pid)
         phr = get_object_or_404(JDD, appointment_id=appointment_id)
-        
+        tests = TestForm.objects.all()
         try:
             rep = MedicalTestResult.objects.get(appointment_id=appointment_id)
         except MedicalTestResult.DoesNotExist:
             rep = None
-
+        
+        test_reports = TestReport.objects.filter(patient_test__appointment_id=appointment_id)
+        med=Medicine.objects.all()
         context = {
             'pd': pd,
             'ad': ad,
             'phr': phr,
             'rep': rep,
+            'tests': tests,
+            'test_reports': test_reports,
+            'med':med,
         }
+        print(ad,pd,pid,phr,tests,rep,test_reports)
+        print("----")
+        print(rep)
+        print(test_reports)
         return render(request, 'consultantDoctor_patientDiagonise.html', context)
     except Visit.DoesNotExist:
         return HttpResponse("Visit not found.")
@@ -92,6 +86,8 @@ def consultantDoctor_patientDiagonise(request,appointment_id):
         return HttpResponse("Patient primary data not found.")
     except JDD.DoesNotExist:
         return HttpResponse("JDD data not found.")
+
+
         # return HttpResponse('<h1 style="color:red;">Oops! This Patient is not yet compeleted the Initial Diagonisis At Junior Doctor</h1>')
 
 
@@ -107,66 +103,35 @@ def consultantDoctor_patientDiagonise_View_Edit(request,patient_id):
     return render(request,'consultantDoctor_patientDiagonise_View_Edit.html',context)
 
 
-def consultantDoctor_precribeTest(request,appointment_id):
+def consultantDoctor_precribeTest(request, appointment_id):
     if request.method == 'POST':
-        appointment_id=request.POST.get('appointment_id')
-        patient_id=request.POST.get('patient_id')
-        x_ray = request.POST.get('x_ray')
-        echocardiogram = request.POST.get('echocardiogram')
-        electrocardiogram=request.POST.get('electrocardiogram')
-        mri = request.POST.get('mri')
-        stress_test=request.POST.get('stress_test')
-        est=request.POST.get('est')
-        blood_test=request.POST.get('blood_test')
-        urine_test=request.POST.get('urine_test')
-        ct_scan=request.POST.get('ct_scan')
-        thread_mill_test = request.POST.get('thread_mill_test')
-        echo=request.POST.get('echo')
-        angiography=request.POST.get('angiography')
-        print('Appointment_Id',appointment_id)
-        print('Patient_Id',patient_id)
-        print('X_Ray',x_ray)
-        print('echocardiogram',echocardiogram)
-        print('electrocardiogram',electrocardiogram)
-        print('MRI Scan', mri)
-        print('stress_test',stress_test)
-        print('Blood Test',blood_test)
-        print('Urine Test',urine_test)
-        print('est',est)
-        print('ct_scan',ct_scan)
-        print('ECG',est)
-        print('echo',echo)
-        print('angiography',angiography)
-        print('thread_mill_test ',thread_mill_test )
-        visit = Visit.objects.get(appointment_id=appointment_id)
-        patient_id = PatientPrimaryData.objects.get(id=visit.patient_id_id)
-        test=Test.objects.create(
-            appointment_id=visit,
-            patient_id=patient_id,
-            test1=x_ray,
-            test2=echocardiogram,
-            test3=electrocardiogram,
-            test4=mri,
-            test5=stress_test,
-            test6=est,
-            test7=blood_test,
-            test8=urine_test,
-            test9=ct_scan,
-            test10=thread_mill_test,
-            test11=echo,
-            test12=angiography, 
+        appointment = Visit.objects.get(appointment_id=appointment_id)
+        patient = PatientPrimaryData.objects.get(id=appointment.patient_id_id)
+
+        selected_tests = request.POST.getlist('test_ids')
+
+        patient_test = PatientTest.objects.create(
+            appointment_id=appointment,
+            patient_id=patient,
         )
-        test.save()
-        return HttpResponse('<h1 style="color:green;">The Test Precribtion is Submitted to the Lab Incharge </h1>')
-        
-    ad=Visit.objects.get(appointment_id=appointment_id)
-    pid=ad.patient_id
-    pd=PatientPrimaryData.objects.get(patient_id=pid)
-    context={
-        'ad':ad,
-        'pd':pd,
+
+        for test_id in selected_tests:
+            test = TestForm.objects.get(id=test_id)
+            patient_test.tests.add(test)
+
+        patient_test.save()
+
+        return redirect('consultant_doctor:consultantDoctor_appointmentList')
+
+    ad = Visit.objects.get(appointment_id=appointment_id)
+    pd = PatientPrimaryData.objects.get(patient_id=ad.patient_id)
+    tests = TestForm.objects.all()
+    context = {
+        'ad': ad,
+        'pd': pd,
+        'tests': tests,
     }
-    return render(request,'consultantDoctor_precribeTest.html',context)
+    return render(request, 'consultantDoctor_precribeTest.html', context)
 
 
 def consultantDoctor_prescription(request):
@@ -197,30 +162,161 @@ def consultantDoctor_all_patients_medical_details(request):
 
 
 def medicine(request):
-    if request.method == 'POST':
-        tablet_names = request.POST.getlist('tablet_name[]')
-        feeding_rules = request.POST.getlist('feeding_rule[]')
-        dosages = request.POST.getlist('dosage[]')
-        feeding_days = request.POST.getlist('feeding_days[]')
+    # if request.method == 'POST':
+    #     print(request.POST)
+    #     tablet_names = request.POST.getlist('tablet_name[]')
+    #     feeding_rules = request.POST.getlist('feeding_rule[]')
+    #     dosages = request.POST.getlist('dosage[]')
+    #     feeding_days = request.POST.getlist('feeding_days[]')
 
-        # Print the values
-        for i in range(len(tablet_names)):
-            print(f"Medicine {i+1}:")
-            print(f"Tablet Name: {tablet_names[i]}")
-            print(f"Feeding Rule: {feeding_rules[i]}")
-            print(f"feeding_days: {feeding_days[i]}")
-            print(f"Dosage: {dosages[i]}")
+    #     # Print the values
+    #     for i in range(len(tablet_names)):
+    #         print(f"Medicine {i+1}:")
+    #         print(f"Tablet Name: {tablet_names[i]}")
+    #         print(f"Feeding Rule: {feeding_rules[i]}")
+    #         print(f"feeding_days: {feeding_days[i]}")
+    #         print(f"Dosage: {dosages[i]}")
             
-        medicine_details_list = [
-            {
-                'tablet_name': tablet_names[i],
-                'feeding_rule': feeding_rules[i],
-                'dosage': dosages[i],
-                'feeding_days': feeding_days[i]
-            }
-            for i in range(len(tablet_names))
-        ]
-        return render(request,'prescription.html',{'medicine_details_list':medicine_details_list})
-
+    #     medicine_details_list = [
+    #         {
+    #             'tablet_name': tablet_names[i],
+    #             'feeding_rule': feeding_rules[i],
+    #             'dosage': dosages[i],
+    #             'feeding_days': feeding_days[i]
+    #         }
+    #         for i in range(len(tablet_names))
+    #     ]
+    #     return render(request,'prescription.html',{'medicine_details_list':medicine_details_list})
+    if request.method == 'POST':
+        # Process the submitted form data to extract the prescribed medicines
+        print(request.POST)
+        if request.method == 'POST':
+            selected_medicines = []
+            for key, value in request.POST.items():
+                if key.startswith('tablet_name'):
+                    tablet_name = value
+                    dosage = request.POST.get('dosage[' + key.split('[')[1], '')
+                    feeding_rule = request.POST.get('feeding_rule[' + key.split('[')[1], '')
+                    feeding_days = request.POST.get('feeding_days[' + key.split('[')[1], '')
+                    selected_medicines.append({'tablet_name': tablet_name, 'dosage': dosage, 'feeding_rule': feeding_rule, 'feeding_days': feeding_days})
         
-    return render(request,'medicine.html')
+        # Assuming you have a prescription template named 'prescription.html'
+        context = {
+            'selected_medicines': selected_medicines,
+        }
+        return render(request, 'prescription.html', context)
+    med=Medicine.objects.all()
+    context={
+        'med':med,
+    }
+    return render(request,'medicine.html',context)
+
+
+
+
+def prescribe_medicine(request, appointment_id):
+    try:
+        ad = get_object_or_404(Visit, appointment_id=appointment_id)
+        pid = ad.patient_id
+        pd = get_object_or_404(PatientPrimaryData, patient_id=pid)
+        phr = get_object_or_404(JDD, appointment_id=appointment_id)
+        tests = TestForm.objects.all()
+        try:
+            rep = MedicalTestResult.objects.get(appointment_id=appointment_id)
+        except MedicalTestResult.DoesNotExist:
+            rep = None
+        
+        test_reports = TestReport.objects.filter(patient_test__appointment_id=appointment_id)
+        med = Medicine.objects.all()
+        context = {
+            'pd': pd,
+            'ad': ad,
+            'phr': phr,
+            'rep': rep,
+            'tests': tests,
+            'test_reports': test_reports,
+            'med': med,
+        }
+        
+        if request.method == 'POST':
+            prescription = PatientPrescription.objects.create(
+                appointment_id=ad,
+                patient_id=pd,
+                chief_complaints=request.POST.get('chief_complaints'),
+                clinical_findings=request.POST.get('clinical_findings'),
+                investigations=request.POST.get('investigations'),
+                diagnosis=request.POST.get('diagnosis'),
+                procedures_conducted=request.POST.get('procedures_conducted'),
+                advice_given=request.POST.get('advice_given'),
+                next_visit=request.POST.get('next_visit')
+            )
+        
+            prescribed_medicines = []
+            for i in range(len(request.POST.getlist('tablet_name[]'))):
+                tablet_name = request.POST.getlist('tablet_name[]')[i]
+                dosage = request.POST.getlist('dosage[]')[i]
+                feeding_rule = request.POST.getlist('feeding_rule[]')[i]
+                feeding_days = request.POST.getlist('feeding_days[]')[i]
+                feeding_time = request.POST.getlist('feeding_time[]')[i]
+                
+                # Get the first Medicine object with the given name
+                medicine = Medicine.objects.filter(name=tablet_name).first()
+                
+                prescribed_medicines.append(PrescribedMedicine(
+                    prescription=prescription,
+                    medicine=medicine,
+                    dosage=dosage,
+                    feeding_rule=feeding_rule,
+                    feeding_time=feeding_time,
+                    feeding_days=feeding_days
+                ))
+        
+            PrescribedMedicine.objects.bulk_create(prescribed_medicines)
+        
+            context.update({
+                'prescription': prescription,
+                'prescribed_medicines': prescribed_medicines,
+            })
+            
+            return render(request, 'prescription.html', context)
+    
+        return render(request, 'consultant_doctor/consultantDoctor_prescribe_medicine.html', context)
+    
+    except Visit.DoesNotExist:
+        return HttpResponse("Visit not found.")
+    except PatientPrimaryData.DoesNotExist:
+        return HttpResponse("Patient primary data not found.")
+    except JDD.DoesNotExist:
+        return HttpResponse("JDD data not found.")  
+    
+    
+def view_prescription(request, appointment_id):
+    try:
+        prescription = get_object_or_404(PatientPrescription, appointment_id=appointment_id)
+        prescribed_medicines = prescription.prescribedmedicine_set.all()
+    except PatientPrescription.DoesNotExist:
+        prescription = None
+        prescribed_medicines = None
+    
+    context = {
+        'prescription': prescription,
+        'prescribed_medicines': prescribed_medicines
+    }
+    return render(request, 'prescription.html', context)
+    
+    
+    
+def all_patient_reports(request):
+    patient_reports = PatientPrescription.objects.all()
+    return render(request, 'consultant_doctor/all_patient_reports.html', {'patient_reports': patient_reports})
+
+
+"""def all_patient_lab_reports(request):
+    lab_reports = TestReport.objects.all()
+    return render(request, 'consultant_doctor/all_patient_lab_reports.html', {'lab_reports': lab_reports})"""
+
+
+def all_patient_lab_reports(request):
+    # Get all PatientTest instances which have associated TestReports
+    patient_tests = PatientTest.objects.prefetch_related('tests', 'test_reports').all()
+    return render(request, 'consultant_doctor/all_patient_lab_reports.html', {'patient_tests': patient_tests})

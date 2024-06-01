@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'home',
     'consultant_doctor',
     'hospital_admin',
+    
 ]
 
 
@@ -68,20 +69,12 @@ MIDDLEWARE = [
       "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.cache.UpdateCacheMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',
+    # 'django.middleware.cache.UpdateCacheMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
-    # 'cchc.receptionist.middleware.SessionExpiredMiddleware',
-    # 'cchc.junior_doctor.middleware.SessionExpiredMiddleware',
-    # 'cchc.lab_incharge.middleware.SessionExpiredMiddleware',
-    # 'cchc.consultant_doctor.middleware.SessionExpiredMiddleware',
-    # 'cchc.hospital_admin.middleware.SessionExpiredMiddleware',
-    # 'cchc.home.middleware.SessionExpiredMiddleware',
-    # 'cchc.patient.middleware.SessionExpiredMiddleware',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
