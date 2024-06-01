@@ -64,11 +64,12 @@
                 class="navbar-brand brand-logo"
                 href="{% url 'receptionist:receptionist_dashboard' %}"
               >
-                <img
+                <!-- <img
                   src="{% static 'assets/rp/images/logo.svg' %}"
                   alt="logo"
-                />
-                <span class="font-12 d-block font-weight-light"
+                /> -->
+                <h4 class="font-16 d-block font-weight-bold">Welcome {{ emp.user.first_name }} {{emp.user.last_name }} </h4>
+                <span class="font-12 d-block font-weight-bold"
                   >Receptionist Dashboard
                 </span>
               </a>
@@ -103,15 +104,15 @@
                     aria-expanded="false"
                   >
                     <div class="nav-profile-img">
-                      <img src="#" alt="image" />
+                      <img src="{{ emp.emp_profile_picture.url }}" alt="image" />
                     </div>
                     <div class="nav-profile-text">
                       <p class="text-black font-weight-semibold m-0">
                         {{ user.username }} !
                       </p>
-                      <span class="font-13 online-color"
+                      <!-- <span class="font-13 online-color"
                         >online <i class="mdi mdi-chevron-down"></i
-                      ></span>
+                      ></span> -->
                     </div>
                   </a>
                   <div
@@ -151,7 +152,7 @@
                   <span class="menu-title">Dashboard</span>
                 </a>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="mdi mdi-stethoscope menu-icon"></i>
                   <span class="menu-title">Doctor</span>
@@ -167,7 +168,7 @@
                     </li>
                   </ul>
                 </div>
-              </li>
+              </li> -->
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="mdi mdi-monitor-dashboard menu-icon"></i>
@@ -194,14 +195,14 @@
                       <a
                         class="nav-link"
                         href="{% url 'receptionist:receptionist_appointmentList'%}"
-                        >Appointment List</a
+                        >Appointment's List</a
                       >
                     </li>
                     <li class="nav-item">
                       <a
                         class="nav-link"
                         href="{% url 'receptionist:receptionist_patientVisit' %}"
-                        >Patient Visit List</a
+                        >Past Appointment's</a
                       >
                     </li>
                   </ul>
@@ -254,7 +255,7 @@
                   <span class="menu-title">Schedule</span>
                 </a>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a
                   class="nav-link"
                   href="{% url 'receptionist:receptionist_patientList' %}"
@@ -262,7 +263,7 @@
                   <i class="mdi mdi-content-copy menu-icon"></i>
                   <span class="menu-title">IP List</span>
                 </a>
-              </li>
+              </li> -->
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="mdi mdi-webpack menu-icon"></i>
@@ -340,6 +341,7 @@
         </nav>
       </div>
       <!-- partial -->
+      
       <div class="container-fluid page-body-wrapper">
         <div class="main-panel">
           <div class="content-wrapper pb-0">
@@ -349,7 +351,8 @@
         </div>
         <!-- main-panel ends -->
       </div>
-      <!-- page-body-wrapper ends -->
+
+   
     </div>
 
     <!--<script src="{% static 'rp/js/sdscrpit.js' %}"> </script>-->

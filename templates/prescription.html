@@ -1,145 +1,202 @@
 {% load static %}
- <!doctype html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
-    <title>CCHC Medical Precription </title>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  </head>
-  <body class="p-3 m-0 border-0 bd-example m-0 border-0">
-  <main role="main" class="main-content">
-        <div class="container-fluid">
-          <div class="row justify-content-center">
-            <div class="col-12 col-lg-10 col-xl-8">
-              <div class="row align-items-center mb-4">
-                <div class="col">
-                  <h2 class="h5 page-title"><small class="text-muted text-uppercase">Invoice</small><br />#1806</h2>
-                </div>
-                <div class="col-auto">
-                  <button type="button" class="btn btn-secondary">Print</button>
-                  <button type="button" class="btn btn-primary">Save</button>
-                </div>
-              </div>
-              <div class="card shadow">
-                <div class="card-body p-5">
-                  <div class="row mb-5">
-                    <div class="col-12 text-center mb-4">
-                      <img src="" class="navbar-brand-img brand-sm mx-auto mb-4" alt="...">
-                      <h2 class="mb-0 text-uppercase">Invoice</h2>
-                      <p class="text-muted"> Altavista<br /> 9022 Suspendisse Rd. </p>
-                    </div>
-                    <div class="col-md-7">
-                      <p class="small text-muted text-uppercase mb-2">Invoice from</p>
-                      <p class="mb-4">
-                        <strong>Imani Lara</strong><br /> Asset Management<br /> 9022 Suspendisse Rd.<br /> High Wycombe<br /> (478) 446-9234<br />
-                      </p>
-                      <p>
-                        <span class="small text-muted text-uppercase">Invoice #</span><br />
-                        <strong>1806</strong>
-                      </p>
-                    </div>
-                    <div class="col-md-5">
-                      <p class="small text-muted text-uppercase mb-2">Invoice to</p>
-                      <p class="mb-4">
-                        <strong>Walter Sawyer</strong><br /> Human Resources<br /> Ap #992-8933 Sagittis Street<br /> Ivanteyevka<br /> (803) 792-2559<br />
-                      </p>
-                      <p>
-                        <small class="small text-muted text-uppercase">Due date</small><br />
-                        <strong>April, 20, 2020</strong>
-                      </p>
-                    </div>
-                  </div> <!-- /.row -->
-                   <table class="table table-borderless table-striped">
-                    
-                    <thead>
-                      <tr class="primary">
-                        <th scope="col">Cheif Complaints</th>
-                        <th scope="col">Clinical Findings</th>
-                      </tr>
-                      </thead>
-
-                      <tbody>
-                        <tr >
-                            <td scope="col">Nothing</td>
-                            <td scope="col"> Covid -ve</td>
-                        </tr>
-                        
-                      </tbody>
-                   </table>
-
-                  <div class="col-md-5">
-                      <div class="text-right mr-2">
-                        <p class="mb-2 h6">
-                          <span class="text-muted">Investigations</span>
-                          <strong>X-Ray</strong>
-                        </p>
-                        <p class="mb-2 h6">
-                          <span class="text-muted">Diagonisis</span>
-                          <strong>Don't Eat Spicy Food</strong>
-                        </p>
-                        <p class="mb-2 h6">
-                          <span class="text-muted">Procedures Conducted </span>
-                          <span>15-08-2023</span>
-                        </p>
-                      </div>
-                    </div>
-                  <table class="table table-borderless table-striped">
-                    <thead>
-                   
-                      <tr>
-                        <th scope="col">Medicine No</th>
-                        <th scope="col">Medicine Name</th>
-                        <th scope="col" class="text-right">Dosage</th>
-                        <th scope="col" class="text-right">Feeding Rule</th>
-                        <th scope="col" class="text-right">Feeding Days</th>
-                      </tr>
-                    
-                    </thead>
-                    <tbody>
-                         {% for medicine in medicine_details_list %}
-                      <tr>
-                        <th scope="row"> {{ forloop.counter }}</th>
-                        <td> {{ medicine.tablet_name }}
-                          <!-- <span class="small text-muted">Design responsive website with existing prototype</span> -->
-                        </td>
-                        <td class="text-right">{{ medicine.dosage }} mg</td>
-                        <td class="text-right">{{ medicine.feeding_rule }}</td>
-                        <td class="text-right">{{ medicine.feeding_days }}</td>
-                      </tr>
-                       {% endfor %}
-                    </tbody>
-                  </table>
-                  <div class="row mt-5">
-                   
-                    <!-- <div class="col-md-5">
-                      <p class="text-muted small">
-                        <strong>Note :</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam hendrerit nisi sed sollicitudin pellentesque. Nunc posuere purus rhoncus pulvinar aliquam. </p>
-                    </div> -->
-                    <div class="col-md-5">
-                      <div class="text-right mr-2">
-                        <p class="mb-2 h6">
-                          <span class="text-muted">Investigations</span>
-                          <strong>X-Ray</strong>
-                        </p>
-                        <p class="mb-2 h6">
-                          <span class="text-muted">Advice Given </span>
-                          <strong>Don't Eat Spicy Food</strong>
-                        </p>
-                        <p class="mb-2 h6">
-                          <span class="text-muted">Next Visit </span>
-                          <span>15-08-2023</span>
-                        </p>
-                      </div>
-                    </div>
-                  </div> 
-                </div> 
-              </div> 
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CCHC Medical Prescription</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+  <style>
+    /* Add your custom CSS styles here */
+    body {
+      background-color: #f8f9fa;
+    }
+    .card {
+      border: none;
+      box-shadow: none;
+    }
+    .table-bordered th,
+    .table-bordered td {
+      border: 0.5px solid #dee2e6; /* Thinner borders */
+      padding: 0.75rem;
+      vertical-align: top;
+    }
+    .table-bordered thead th {
+      border-top: none;
+      border-bottom: 1px solid #dee2e6; /* Thinner bottom border */
+      background-color: #6c757d; /* Dark gray background */
+      color: #ffffff; /* White text */
+    }
+    .table-bordered tbody + tbody {
+      border-top: 1px solid #dee2e6; /* Thinner top border */
+    }
+    .table-striped tbody tr:nth-of-type(odd) {
+      background-color: #e9ecef; /* Light gray background for odd rows */
+    }
+    .table-striped tbody tr:nth-of-type(even) {
+      background-color: #f8f9fa; /* White background for even rows */
+    }
+    .table {
+      margin-bottom: 0; /* Remove bottom margin */
+    }
+    th {
+      background-color: #6c757d; /* Dark gray background for table headers */
+      color: #ffffff; /* White text */
+    }
+    td {
+      background-color: #f8f9fa; /* Light background for table cells */
+    }
+    /* Print styles */
+    @media print {
+      .card {
+        box-shadow: none !important;
+      }
+      #printButton {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body class="p-3 m-0 border-0 bd-example m-0 border-0">
+<main role="main" class="main-content">
+  <div class="container-fluid">
+    <!-- Header with logo and address -->
+    <div class="container-fluid d-flex justify-content-between align-items-center mb-4">
+      <div class="d-flex align-items-center">
+        <img src="{% static 'assets/icons/hb.png' %}" class="me-2" style="height: 150px; width: 150px; object-fit: contain" />
+      </div>
+      <div>
+        <h3 class="mb-2" style="color: #dc3545">Crazy Coders Health Center</h3>
+        <p class="mb-1">Mulugu Rd, Vidya Nagar, Warangal</p>
+        <p class="mb-1">Telangana 506007, India</p>
+        <p class="mb-1">info@cchc.com</p>
+        <p class="mb-1"><i class="uil uil-phone me-1"></i> +91 9876543210</p>
+      </div>
+    </div>
+    <hr />
+    <!-- End of header -->
+    
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-10 col-xl-8">
+        <!-- Prescription content here -->
+        <div class="card">
+          <div class="card-body p-5">
+            
+            <div class="text-end mb-4">
+              <button id="printButton" class="btn btn-primary" onclick="window.print()">Print</button>
             </div>
+            <!-- Prescription details -->
+            <h3 class="card-title text-center text-danger mb-4"><u>CCHC In Patient Medical Prescription</u></h3>
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Patient Name</th>
+                  <td>{{ prescription.patient_id.patient_name }}</td>
+                  <th>Date of Visit</th>
+                  <td>{{ prescription.appointment_id.today_date }}</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>Patient ID</th>
+                  <td>{{ prescription.patient_id.patient_id }}</td>
+                  <th>Appointment ID | Token</th>
+                  <td>{{ prescription.appointment_id.appointment_id }} | {{ prescription.appointment_id.patient_token }}</td>
+                </tr>
+                <tr>
+                  <th>Patient Type</th>
+                  <td>{{ prescription.appointment_id.patient_type }}</td>
+                  <th>Doctor Name</th>
+                  <td>{{ prescription.appointment_id.doctor_name }}</td>
+                </tr>
+                <tr>
+                  <th>Age</th>
+                  <td>{{ prescription.patient_id.patient_age }}</td>
+                  <th>Gender</th>
+                  <td>{{ prescription.patient_id.patient_gender }}</td>
+                </tr>
+                <tr>
+                  <th>Date of Birth</th>
+                  <td>{{ prescription.patient_id.patient_dob }}</td>
+                  <th>Mobile Number</th>
+                  <td>{{ prescription.patient_id.mobile_number }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <table class="table table-bordered table-striped">
+              <tbody>
+                <tr>
+                  <th>Chief Complaints</th>
+                  <td>{{ prescription.chief_complaints }}</td>
+                </tr>
+                <tr>
+                  <th>Clinical Findings</th>
+                  <td>{{ prescription.clinical_findings }}</td>
+                </tr>
+                <tr>
+                  <th>Investigations</th>
+                  <td>{{ prescription.investigations }}</td>
+                </tr>
+                <tr>
+                  <th>Diagnosis</th>
+                  <td>{{ prescription.diagnosis }}</td>
+                </tr>
+                <tr>
+                  <th>Procedures Conducted</th>
+                  <td>{{ prescription.procedures_conducted }}</td>
+                </tr>
+                <tr>
+                  <th>Advice Given</th>
+                  <td>{{ prescription.advice_given }}</td>
+                </tr>
+                <tr>
+                  <th>Next Visit</th>
+                  <td>{{ prescription.next_visit }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <!-- Prescription table -->
+            <h5 class="card-title text-center text-danger mb-4">Prescribed Medicines</h5>
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Medicine No</th>
+                  <th>Medicine Name</th>
+                  <th class="text-right">Dosage</th>
+                  <th class="text-right">Feeding Rule</th>
+                  <th class="text-right">Feeding Time</th>
+                  <th class="text-right">Feeding Days</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for medicine in prescribed_medicines %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{ medicine.medicine.name }}</td>
+                  <td class="text-right">{{ medicine.dosage }} mg</td>
+                  <td class="text-right">{{ medicine.feeding_rule }}</td>
+                  <td class="text-right">{{ medicine.feeding_time }}</td>
+                  <td class="text-right">{{ medicine.feeding_days }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            
           </div>
-        </div
-    </main>
-  </body>
+        </div>
+        <!-- Footer -->
+        <div class="text-center mt-4">
+          <p class="mb-1">This is a computer-generated prescription.</p>
+          <p class="mb-1">All rights reserved.</p>
+          <p class="mb-1"><a href="https://healthcenter.onrender.com/" target="_blank">healthcenter.onrender.com</a></p>
+        </div>
+        <!-- End of Footer -->
+      </div>
+    </div>
+  </div>
+</main>
+</body>
 </html>
